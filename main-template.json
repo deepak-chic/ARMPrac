@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "String",
+            "metadata": {
+                "description": "Azure region for the deployment, resource group and resources."
+            }
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "name": "VNetDeployment",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2022-09-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[deployment().properties.templateLink.uri]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parametersLink": {
+                    "uri": "[uri('file', './VirtualNetwork/vnet-template-parameters.dev.json')]"
+                },
+                "parameters":{
+                    "location":{
+                        "value":"[parameters('location')]"
+                    }
+                }
+            }
+        }
+    ]
+}

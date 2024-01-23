@@ -1,0 +1,138 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworkName": {
+            "value": "vnet-z-cplus-n-001"
+        },
+        "tagsByResource": {
+            "value": {
+                "Microsoft.Network/virtualNetworks": {
+                    "Cost Center": "1108-300-8602"
+                }
+            }
+        },
+        "addressPrefixes": {
+            "value": [
+                "10.195.112.0/22"
+            ]
+        },
+        "subnets": {
+            "value": [
+                {
+                    "name": "AzureBastionSubnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.112.192/26"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled",
+                        "defaultOutboundAccess": true
+                    }
+                },
+                {
+                    "name": "AzureFirewallSubnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.113.0/26"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled",
+                        "defaultOutboundAccess": true
+                    }
+                },
+                {
+                    "name": "AzureFirewallManagementSubnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.113.64/26"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled",
+                        "defaultOutboundAccess": true
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-appgateway",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.114.0/26"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "GatewaySubnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.112.128/27"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-db",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.114.64/28"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-northstategrocer",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.115.8/29"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-plummarket",
+                    "properties": {
+                        "addressPrefix": [
+                            "10.195.115.0/29"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-ai",
+                    "properties": {
+                        "addressPrefix": [
+                            "10.195.114.80/28"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                },
+                {
+                    "name": "sn-z-cplus-infra",
+                    "properties": {
+                        "addressPrefix": [
+                            "10.195.112.0/25"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    }
+                }
+            ]
+        }
+    }
+}

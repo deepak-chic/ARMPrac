@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "bastionHosts_bastion_z_cplus_n_001_name": {
+            "defaultValue": "bastion-z-cplus-n-001",
+            "type": "String"
+        },
+        "publicIp-name":{
+            "type": "string",
+            "defaultValue":"pip-z-cplus-bastion-n-001"
+        },
+        "virtualNetworkName":{
+            "type": "string",
+            "defaultValue":"vnet-z-cplus-n-001"
+        },
+        "subnetName":{
+            "type": "string",
+            "defaultValue":"AzureBastionSubnet"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('bastionHosts_bastion_z_cplus_n_001_name')]",
+            "location": "centralus",
+            "tags": {
+                "Cost Center": "1108-300-8602"
+            },
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                //"dnsName": "bst-6a9f002f-b8a3-4702-a602-c1562382e9c4.bastion.azure.com",
+                "scaleUnits": 2,
+                "ipConfigurations": [
+                    {
+                        "name": "IpConf",
+                        "id": "[concat(resourceId('Microsoft.Network/bastionHosts', parameters('bastionHosts_bastion_z_cplus_n_001_name')), '/bastionHostIpConfigurations/IpConf')]",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIp-name'))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
