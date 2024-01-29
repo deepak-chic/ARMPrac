@@ -3,8 +3,20 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "publicIPAddresses_pip_z_cplus_bastion_n_001_name": {
-            "defaultValue": "pip-z-cplus-bastion-n-001",
+            "defaultValue": "",
             "type": "String"
+        },
+         "location": {
+            "type": "String",
+            "defaultValue": "centralus"
+        },
+         "sku": {
+            "type": "String",
+            "defaultValue": "Standard"
+        },
+         "tier": {
+            "type": "String",
+            "defaultValue": "Regional"
         }
     },
     "variables": {},
@@ -13,10 +25,10 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2023-04-01",
             "name": "[parameters('publicIPAddresses_pip_z_cplus_bastion_n_001_name')]",
-            "location": "centralus",
+            "location": "[parameters('location')]",
             "sku": {
-                "name": "Standard",
-                "tier": "Regional"
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
             },
             "properties": {
                 "publicIPAddressVersion": "IPv4",

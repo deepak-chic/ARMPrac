@@ -1,2 +1,2 @@
 # ARMPrac
-ARM Practise
+ARM Template For Connect+ Environement

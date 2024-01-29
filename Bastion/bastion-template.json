@@ -17,6 +17,14 @@
         "subnetName":{
             "type": "string",
             "defaultValue":"AzureBastionSubnet"
+        },
+         "location": {
+            "type": "String",
+            "defaultValue": "centralus"
+        },
+        "sku": {
+            "type": "String",
+            "defaultValue": "Basic"
         }
     },
     "variables": {},
@@ -25,15 +33,14 @@
             "type": "Microsoft.Network/bastionHosts",
             "apiVersion": "2023-04-01",
             "name": "[parameters('bastionHosts_bastion_z_cplus_n_001_name')]",
-            "location": "centralus",
+            "location": "[parameters('location')]",
             "tags": {
                 "Cost Center": "1108-300-8602"
             },
             "sku": {
-                "name": "Basic"
+                "name": "[parameters('sku')]"
             },
             "properties": {
-                //"dnsName": "bst-6a9f002f-b8a3-4702-a602-c1562382e9c4.bastion.azure.com",
                 "scaleUnits": 2,
                 "ipConfigurations": [
                     {
