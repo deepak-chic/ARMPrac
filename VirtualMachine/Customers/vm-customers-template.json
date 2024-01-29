@@ -2,15 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachine_name": {
-            "defaultValue": "vm-z-redis-n",
+        "virtualMachineName": {
+            "defaultValue": "vm-z-customername-n",
             "type": "String"
         },
         "location": {
             "type": "String",
-            "metadata": {
-                "description": "Azure region for the deployment, resource group and resources."
-            },
             "defaultValue": "centralus"
         },
         "tags": {
@@ -25,10 +22,10 @@
         },
         "numberOfInstances": {
             "type": "int",
-            "defaultValue": 2
+            "defaultValue": 1
         },
-        "networkInterfaces_name": {
-            "defaultValue": "vm-z-redis-n-nic",
+        "networkInterfacesName": {
+            "defaultValue": "vm-z-customer-n-nic",
             "type": "String"
         },
         "virtualNetworkName": {
@@ -36,11 +33,11 @@
             "type": "String"
         },
         "subnetName": {
-            "defaultValue": "sn-z-cplus-ai",
+            "defaultValue": "sn-z-cplus-customer",
             "type": "String"
         },
-        "sshKeyName": {
-            "defaultValue": "vm-z-redis-n-001-key",
+        "infraResourceGroupName": {
+            "defaultValue": "rg-z-cplus-infra-n-001",
             "type": "String"
         }
     },
@@ -49,7 +46,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2023-03-01",
-            "name": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "copy": {
@@ -57,7 +54,7 @@
                 "count": "[parameters('numberOfInstances')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]"
+                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -68,14 +65,14 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "RedHat",
-                        "offer": "RHEL",
-                        "sku": "7lvm-gen2",
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2022-datacenter-smalldisk-g2",
                         "version": "latest"
                     },
                     "osDisk": {
-                        "osType": "Linux",
-                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachine_name'), 'OsDisk', copyIndex(1))]",
+                        "osType": "Windows",
+                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachineName'), 'OsDisk', copyIndex(1))]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -88,32 +85,33 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
                     "adminUsername": "azureuser",
-                    "linuxConfiguration": {
-                        "disablePasswordAuthentication": true,
-                        "ssh": {
-                            "publicKeys": [
-                                {
-                                    "path": "/home/azureuser/.ssh/authorized_keys",
-                                    "keyData": "[reference(resourceId('Microsoft.Compute/sshPublicKeys',parameters('sshKeyName')),'2023-03-01').publicKey]"
-                                }
-                            ]
-                        },
+                    "adminPassword":"Copeland@123",
+                    "windowsConfiguration": {
                         "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
                         "patchSettings": {
-                            "patchMode": "ImageDefault",
-                            "assessmentMode": "ImageDefault"
+                            "patchMode": "AutomaticByOS",
+                            "assessmentMode": "ImageDefault",
+                            "enableHotpatching": false
                         },
                         "enableVMAgentPlatformUpdates": false
                     },
                     "secrets": [],
                     "allowExtensionOperations": true
                 },
+                "securityProfile": {
+                    "uefiSettings": {
+                        "secureBootEnabled": true,
+                        "vTpmEnabled": true
+                    },
+                    "securityType": "TrustedLaunch"
+                },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
                             "properties": {
                                 "deleteOption": "Delete"
                             }
@@ -134,7 +132,7 @@
                 "name": "NetworkInterfaceLoop",
                 "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "kind": "Regular",
@@ -145,7 +143,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('rg-z-cplus-infra-n-001', 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                                "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"

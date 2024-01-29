@@ -1,11 +1,10 @@
-# Global Values
+# Global Variables
 $environment = "dev"
 $location = "centralus"
 $globalParameterFile = "./global-parameters.$environment.json"
 #================================================================================
 
 # Infra Resource Group and Resources
-
 $rgInfraName = "rg-z-cplus-infra-n-001"
 
 # Deploy Resource Group
@@ -35,76 +34,110 @@ az deployment group create --resource-group $rgInfraName --template-file $templa
 #=============================================================================================
 
 # AI Resource Group and Resources
-
 $rgAIName = "rg-z-cplus-ai-n-001"
-$sshPublicKey = Get-Content "./VirtualMachine/Linux/public_ssh_key.pub" -Raw
+$sshKeyName = 'ssh-z-cplus-cus-ai-n-001'
 
+# Create the resource group
 $templateFile = "./ResourceGroup/resourcegroup-template.json"
 az deployment sub create `
    --location $location `
    --template-file $templateFile `
    --parameters $globalParameterFile name=$rgAIName
 
-# # Deploy the AI reciver VM
-$templateFile = "./VirtualMachine/Linux/vm-aire.json"
-az sshkey create --name "vm-z-aire-n-001-key" --resource-group $rgAIName --public-key $sshPublicKey
+# Generate the SSH key
+$templateFile = "./VirtualMachine/SSHTemplate/ssh-template.json"
+$sshPublicKey = Get-Content "./VirtualMachine/public_ssh_key.pub" -Raw
 az deployment group create `
    --resource-group $rgAIName `
-   --template-file $templateFile
+   --template-file $templateFile `
+   --parameters $globalParameterFile sshKeyName=$sshKeyName sshPublicKeyValue=$sshPublicKey
 
-# # Deploy the ProAct service VM
-# $templateFile = "./VirtualMachine/Linux/vm-aise.json"
-# az sshkey create --name "vm-z-aise-n-001-key" --resource-group $rgAIName --public-key $sshPublicKey --tags $tags | ConvertFrom-Json
-# az deployment group create `
-#    --resource-group $rgAIName `
-#    --template-file $templateFile
+# Deploy the AI reciver VM
+$templateFile = "./VirtualMachine/Linux/vm-aire-template.json"
+$templateParameterFile = "./VirtualMachine/Linux/vm-aire-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgAIName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName sshKeyName=$sshKeyName
 
-# # # Deploy the redis VM
-# $templateFile = "./VirtualMachine/Linux/vm-redis.json"
-# az sshkey create --name "vm-z-redis-n-001-key" --resource-group $rgAIName --public-key $sshPublicKey --tags $tags | ConvertFrom-Json
-# az deployment group create `
-#    --resource-group $rgAIName `
-#    --template-file $templateFile
+# Deploy the ProAct service VM
+$templateFile = "./VirtualMachine/Linux/vm-aise-template.json"
+$templateParameterFile = "./VirtualMachine/Linux/vm-aise-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgAIName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName sshKeyName=$sshKeyName
+
+# Deploy the redis VM
+$templateFile = "./VirtualMachine/Linux/vm-redis-template.json"
+$templateParameterFile = "./VirtualMachine/Linux/vm-redis-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgAIName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName sshKeyName=$sshKeyName
 
 # # #=============================================================================================
-# # DB Resource Group and Resources
+# DB Resource Group and Resources
 
-# $rgDBName = "rg-z-cplus-db-n-001"
-# $sshPublicKey = Get-Content "./VirtualMachine/Linux/public_ssh_key.pub" -Raw
-# az group create --name $rgDBName --location $location --tags $tags
+$rgDBName = "rg-z-cplus-db-n-001"
+$sshKeyName = 'ssh-z-cplus-cus-db-n-001'
 
-# # Deploy the Oracle DB VM
-# $templateFile = "./VirtualMachine/Db/vm-orad.json"
-# az sshkey create --name "vm-z-orad-n-001-key" --resource-group $rgDBName --public-key $sshPublicKey --tags $tags | ConvertFrom-Json
-# az deployment group create `
-#    --resource-group $rgDBName `
-#    --template-file $templateFile
+# Create the resource group
+$templateFile = "./ResourceGroup/resourcegroup-template.json"
+az deployment sub create `
+   --location $location `
+   --template-file $templateFile `
+   --parameters $globalParameterFile name=$rgDBName
 
-# # Deploy the SQL DB VM
-# $templateFile = "./VirtualMachine/Db/vm-sql.json"
-# az deployment group create `
-#    --resource-group $rgDBName `
-#    --template-file $templateFile
+   # Generate the SSH key
+$templateFile = "./VirtualMachine/SSHTemplate/ssh-template.json"
+$sshPublicKey = Get-Content "./VirtualMachine/public_ssh_key.pub" -Raw
+az deployment group create `
+   --resource-group $rgDBName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile sshKeyName=$sshKeyName sshPublicKeyValue=$sshPublicKey
+
+# Deploy the Oracle DB VM
+$templateFile = "./VirtualMachine/Db/vm-orad-template.json"
+$templateParameterFile = "./VirtualMachine/Db/vm-orad-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgDBName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName sshKeyName=$sshKeyName
+
+# Deploy the SQL DB VM
+$templateFile = "./VirtualMachine/Db/vm-sql-template.json"
+$templateParameterFile = "./VirtualMachine/Db/vm-sql-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgDBName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName
 
 # #=============================================================================================
-# # Customer Resource Group and Resources
+# Customer Resource Group and Resources
 
-# $customers = @('plum', 'nstg')
-# foreach ( $customer in $customers ) {
-#    $rgCustomerName = "rg-z-cplus-$customer-n-001"
-#    az group create --name $rgCustomerName --location $location --tags $tags
+$customers = @('plum', 'nstg')
+foreach ( $customer in $customers ) {
+   $rgCustomerName = "rg-z-cplus-$customer-n-001"
 
-#    # Deploy the Oracle DB VM
-#    $customerVM_Name = "vm-z-$customer-n"
-#    $customerNIC_Name = "$customerVM_Name-nic"
-#    $customerSubNet_Name = "sn-z-cplus-$customer"
-#    $templateFile = "./VirtualMachine/Customers/vm-customers.json"
-#    az deployment group create `
-#       --resource-group $rgCustomerName `
-#       --template-file $templateFile `
-#       --parameters virtualMachine_name=$customerVM_Name networkInterfaces_name=$customerNIC_Name `
-#       subnetName=$customerSubNet_Name
-# }
+   $templateFile = "./ResourceGroup/resourcegroup-template.json"
+   az deployment sub create `
+      --location $location `
+      --template-file $templateFile `
+      --parameters $globalParameterFile name=$rgCustomerName
 
-# Write-Output "Done the Infra"
+   # Deploy the Oracle DB VM
+   $customerVMName = "vm-z-$customer-n"
+   $customerNICName = "$customerVMName-nic"
+   $customerSubNetName = "sn-z-cplus-$customer"
+   $templateFile = "./VirtualMachine/Customers/vm-customers-template.json"
+   $templateParameterFile = "./VirtualMachine/Customers/vm-customers-template-parameters.$environment.json"
+   az deployment group create `
+      --resource-group $rgCustomerName `
+      --template-file $templateFile `
+      --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
+      subnetName=$customerSubNetName
+}
+
+Write-Output "Done the Infra"
 

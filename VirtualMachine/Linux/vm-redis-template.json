@@ -2,39 +2,30 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachine_name": {
-            "defaultValue": "vm-z-aire-n",
+        "virtualMachineName": {
+            "defaultValue": "vm-z-redis-n",
             "type": "String"
         },
         "location": {
             "type": "String",
-            "metadata": {
-                "description": "Azure region for the deployment, resource group and resources."
-            },
             "defaultValue": "centralus"
         },
         "tags": {
             "defaultValue": {
                 "Cost Center": "1108-300-8602"
             },
-            "type": "Object",
-            "metadata": {
-                "description": "Optional tags for the resources."
-            }
+            "type": "Object"
         },
         "vmSize": {
             "type": "String",
-            "metadata": {
-                "description": "Azure region for the deployment, resource group and resources."
-            },
             "defaultValue": "Standard_B2s"
         },
         "numberOfInstances": {
             "type": "int",
             "defaultValue": 2
         },
-        "networkInterfaces_name": {
-            "defaultValue": "vm-z-aire-n-nic",
+        "networkInterfacesName": {
+            "defaultValue": "vm-z-redis-n-nic",
             "type": "String"
         },
         "virtualNetworkName": {
@@ -45,8 +36,12 @@
             "defaultValue": "sn-z-cplus-ai",
             "type": "String"
         },
-        "sshKeyName": {
-            "defaultValue": "vm-z-aire-n-001-key",
+        "sshKeyName":{
+            "type": "string",
+            "defaultValue":"vm-z-aise-n-001-key"
+        },
+        "infraResourceGroupName": {
+            "defaultValue": "rg-z-cplus-infra-n-001",
             "type": "String"
         }
     },
@@ -55,7 +50,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2023-03-01",
-            "name": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "copy": {
@@ -63,7 +58,7 @@
                 "count": "[parameters('numberOfInstances')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]"
+                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -76,12 +71,12 @@
                     "imageReference": {
                         "publisher": "RedHat",
                         "offer": "RHEL",
-                        "sku": "8-lvm-gen2",
+                        "sku": "7lvm-gen2",
                         "version": "latest"
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachine_name'), 'OsDisk', copyIndex(1))]",
+                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachineName'), 'OsDisk', copyIndex(1))]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -94,7 +89,7 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
                     "adminUsername": "azureuser",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -116,17 +111,10 @@
                     "secrets": [],
                     "allowExtensionOperations": true
                 },
-                "securityProfile": {
-                    "uefiSettings": {
-                        "secureBootEnabled": true,
-                        "vTpmEnabled": true
-                    },
-                    "securityType": "TrustedLaunch"
-                },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
                             "properties": {
                                 "deleteOption": "Delete"
                             }
@@ -147,7 +135,7 @@
                 "name": "NetworkInterfaceLoop",
                 "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "kind": "Regular",
@@ -158,7 +146,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('rg-z-cplus-infra-n-001', 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                                "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"

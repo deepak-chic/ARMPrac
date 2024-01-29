@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachine_name": {
+        "virtualMachineName": {
             "defaultValue": "vm-z-orad-n",
             "type": "String"
         },
@@ -18,16 +18,13 @@
         },
         "vmSize": {
             "type": "String",
-            "metadata": {
-                "description": "Azure region for the deployment, resource group and resources."
-            },
             "defaultValue": "Standard_D4s_v3"
         },
         "numberOfInstances": {
             "type": "int",
             "defaultValue": 1
         },
-        "networkInterfaces_name": {
+        "networkInterfacesName": {
             "defaultValue": "vm-z-orad-n-nic",
             "type": "String"
         },
@@ -39,8 +36,12 @@
             "defaultValue": "sn-z-cplus-db",
             "type": "String"
         },
-        "sshKeyName": {
-            "defaultValue": "vm-z-orad-n-001-key",
+        "sshKeyName":{
+            "type": "string",
+            "defaultValue":"ssh-z-cplus-cus-db-n-001"
+        },
+        "infraResourceGroupName": {
+            "defaultValue": "rg-z-cplus-infra-n-001",
             "type": "String"
         }
     },
@@ -49,7 +50,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2023-03-01",
-            "name": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "copy": {
@@ -57,9 +58,9 @@
                 "count": "[parameters('numberOfInstances')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]",
-                "[concat('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk1', copyIndex(1)))]",
-                "[concat('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk2', copyIndex(1)))]"
+                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
+                "[concat('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]",
+                "[concat('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1)))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -77,7 +78,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachine_name'), 'OsDisk', copyIndex(1))]",
+                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachineName'), 'OsDisk', copyIndex(1))]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -94,7 +95,7 @@
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
                                 "storageAccountType": "StandardSSD_LRS",
-                                "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk1', copyIndex(1)))]"
+                                "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]"
                             },
                             "deleteOption": "Delete",
                             "diskSizeGB": 1024,
@@ -107,7 +108,7 @@
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
                                 "storageAccountType": "StandardSSD_LRS",
-                                "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk2', copyIndex(1)))]"
+                                "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1)))]"
                             },
                             "deleteOption": "Detach",
                             "diskSizeGB": 256,
@@ -117,7 +118,7 @@
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
-                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachine_name'), copyIndex(1))]",
+                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
                     "adminUsername": "azureuser",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -148,7 +149,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1)))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
                             "properties": {
                                 "deleteOption": "Delete"
                             }
@@ -169,7 +170,7 @@
                 "name": "NetworkInterfaceLoop",
                 "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}-{1:000}',parameters('networkInterfaces_name'), copyIndex(1))]",
+            "name": "[format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1))]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "kind": "Regular",
@@ -180,7 +181,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('rg-z-cplus-infra-n-001', 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                                "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -205,7 +206,7 @@
                 "name": "DataDiskLoop",
                 "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk1', copyIndex(1))]",
+            "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1))]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Standard_LRS"
@@ -224,7 +225,7 @@
                 "name": "DataDiskLoop",
                 "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachine_name'), 'datadisk2', copyIndex(1))]",
+            "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1))]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Standard_LRS"
