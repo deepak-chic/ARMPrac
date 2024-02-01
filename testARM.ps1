@@ -1,11 +1,18 @@
-$templateFile = "./VirtualMachine/SSHTemplate/ssh-template.json"
-$sshPublicKey = Get-Content "./VirtualMachine/public_ssh_key.pub" -Raw
+$environment = "dev"
+$globalParameterFile = "./global-parameters.$environment.json"
+$rgInfraName = "rg-z-cplus-infra-n-001"
 
-ssh_public_key
+$templateFile = "./PublicKeys/pk-template.json"
+$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group 'rg-z-cplus-infra-n-001' `
+   --resource-group $rgInfraName `
    --template-file $templateFile `
-   --parameters ssh_public_key=$sshPublicKey
+   --parameters $globalParameterFile $templateParameterFile
 
-$rgAIName = "rg-z-cplus-ai-n-001"
-az sshkey create --name "vm-z-aise-n-001-key" --resource-group $rgAIName
+$templateFile = "./APIManagementService/apim-template.json"
+#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile
+

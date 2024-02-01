@@ -14,6 +14,12 @@ az deployment sub create `
    --template-file $templateFile `
    --parameters $globalParameterFile name=$rgInfraName
 
+# Deploy the Network Security Groups
+$templateFile = "./NetworkSecurityGroup/nsg-template.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   
 # Deploy Virtual Network
 $templateFile = "./VirtualNetwork/vnet-template.json"
 $templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
@@ -89,7 +95,7 @@ az deployment sub create `
    --template-file $templateFile `
    --parameters $globalParameterFile name=$rgDBName
 
-   # Generate the SSH key
+# Generate the SSH key
 $templateFile = "./VirtualMachine/SSHTemplate/ssh-template.json"
 $sshPublicKey = Get-Content "./VirtualMachine/public_ssh_key.pub" -Raw
 az deployment group create `
@@ -139,5 +145,28 @@ foreach ( $customer in $customers ) {
       subnetName=$customerSubNetName
 }
 
+# ======================================================================================
+
+# Other Infra Resources
+
+# Deploy Key vault
+$templateFile = "./Keyvault/kv-template.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+
+# Deploy Storage Account
+$templateFile = "./StorageAccount/sa-template.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+
+$templateFile = "./APIManagementService/apim-template.json"
+#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile
+      
 Write-Output "Done the Infra"
 

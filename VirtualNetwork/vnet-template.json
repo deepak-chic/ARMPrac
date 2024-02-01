@@ -26,9 +26,8 @@
             "defaultValue": [
                 {
                     "name": "default",
-                    "properties": {
-                        "addressPrefix": "10.1.0.0/24"
-                    }
+                    "addressPrefix": "10.1.0.0/24",
+                    "nsgName": ""
                 }
             ],
             "type": "Array"
@@ -47,14 +46,114 @@
                 "addressSpace": {
                     "addressPrefixes": "[parameters('addressPrefixes')]"
                 },
-                "subnets": "[parameters('subnets')]"
+                "subnets": [
+                    {
+                        "name": "[parameters('subnets')[0].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[0].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[0].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[0].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[0].properties.privateLinkServiceNetworkPolicies]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[1].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[1].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[1].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[1].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[1].properties.privateLinkServiceNetworkPolicies]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[2].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[2].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[2].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[2].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[2].properties.privateLinkServiceNetworkPolicies]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[3].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[3].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[3].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[3].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[3].properties.privateLinkServiceNetworkPolicies]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[4].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[4].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[4].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[4].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[4].properties.privateLinkServiceNetworkPolicies]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[5].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[5].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[5].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[5].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[5].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[5].nsgName)]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[6].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[6].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[6].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[6].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[6].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[6].nsgName)]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[7].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[7].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[7].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[7].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[7].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[7].nsgName)]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[8].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[8].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[8].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[8].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[8].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[8].nsgName)]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnets')[9].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[9].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[9].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[9].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[9].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[9].nsgName)]"
+                            }
+                        }
+                    }
+                ]
             }
         }
-    ],
-    "outputs": {
-        "SubNet1": {
-            "type": "Array",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))).subnets]"
-        }
-    }
+    ]
 }

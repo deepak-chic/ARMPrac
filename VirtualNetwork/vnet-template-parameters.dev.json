@@ -22,7 +22,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "AzureFirewallSubnet",
@@ -34,7 +35,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "AzureFirewallManagementSubnet",
@@ -46,7 +48,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "sn-z-cplus-appgateway",
@@ -57,7 +60,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "GatewaySubnet",
@@ -68,7 +72,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "sn-z-cplus-db",
@@ -79,7 +84,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-db-n-001"
                 },
                 {
                     "name": "sn-z-cplus-nstg",
@@ -90,7 +96,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-nstg-n-001"
                 },
                 {
                     "name": "sn-z-cplus-plum",
@@ -101,7 +108,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-plum-n-001"
                 },
                 {
                     "name": "sn-z-cplus-ai",
@@ -112,7 +120,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-ai-n-001"
                 },
                 {
                     "name": "sn-z-cplus-infra",
@@ -123,7 +132,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-infra-n-001"
                 }
             ]
         }
