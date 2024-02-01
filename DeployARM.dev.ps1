@@ -16,9 +16,11 @@ az deployment sub create `
 
 # Deploy the Network Security Groups
 $templateFile = "./NetworkSecurityGroup/nsg-template.json"
+$templateParameterFile = "./NetworkSecurityGroup/nsg-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
    
 # Deploy Virtual Network
 $templateFile = "./VirtualNetwork/vnet-template.json"
@@ -31,12 +33,18 @@ az deployment group create `
 # Deploy the Public IP regarding bastion
 $templateFile = "./PublicKeys/bastion-pk.json"
 $templateParameterFile = "./PublicKeys/bastion-pk-parameters.$environment.json"
-az deployment group create --resource-group $rgInfraName --template-file $templateFile --parameters $templateParameterFile location=$location
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
 
 # Deploy the Bastion
 $templateFile = "./Bastion/bastion-template.json"
 $templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
-az deployment group create --resource-group $rgInfraName --template-file $templateFile --parameters $templateParameterFile location=$location
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
 #=============================================================================================
 
 # AI Resource Group and Resources
@@ -151,22 +159,26 @@ foreach ( $customer in $customers ) {
 
 # Deploy Key vault
 $templateFile = "./Keyvault/kv-template.json"
+$templateParameterFile = "./Keyvault/kv-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
 
 # Deploy Storage Account
 $templateFile = "./StorageAccount/sa-template.json"
+$templateParameterFile = "./StorageAccount/sa-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
 
 $templateFile = "./APIManagementService/apim-template.json"
-#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+$templateParameterFile = "./APIManagementService/apim-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
-   --parameters $globalParameterFile
+   --parameters $globalParameterFile $templateParameterFile
       
 Write-Output "Done the Infra"
 

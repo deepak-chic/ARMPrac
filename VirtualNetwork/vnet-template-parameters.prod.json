@@ -5,13 +5,6 @@
         "virtualNetworkName": {
             "value": "vnet-z-cplus-n-001"
         },
-        "tagsByResource": {
-            "value": {
-                "Microsoft.Network/virtualNetworks": {
-                    "Cost Center": "1108-300-8602"
-                }
-            }
-        },
         "addressPrefixes": {
             "value": [
                 "10.195.112.0/22"
@@ -29,7 +22,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "AzureFirewallSubnet",
@@ -41,7 +35,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "AzureFirewallManagementSubnet",
@@ -53,7 +48,8 @@
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "sn-z-cplus-appgateway",
@@ -64,7 +60,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "GatewaySubnet",
@@ -75,7 +72,8 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":""
                 },
                 {
                     "name": "sn-z-cplus-db",
@@ -86,10 +84,11 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-db-n-001"
                 },
                 {
-                    "name": "sn-z-cplus-northstategrocer",
+                    "name": "sn-z-cplus-nstg",
                     "properties": {
                         "addressPrefixes": [
                             "10.195.115.8/29"
@@ -97,40 +96,44 @@
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-nstg-n-001"
                 },
                 {
-                    "name": "sn-z-cplus-plummarket",
+                    "name": "sn-z-cplus-plum",
                     "properties": {
-                        "addressPrefix": [
+                        "addressPrefixes": [
                             "10.195.115.0/29"
                         ],
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-plum-n-001"
                 },
                 {
                     "name": "sn-z-cplus-ai",
                     "properties": {
-                        "addressPrefix": [
+                        "addressPrefixes": [
                             "10.195.114.80/28"
                         ],
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-ai-n-001"
                 },
                 {
                     "name": "sn-z-cplus-infra",
                     "properties": {
-                        "addressPrefix": [
+                        "addressPrefixes": [
                             "10.195.112.0/25"
                         ],
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",
                         "privateLinkServiceNetworkPolicies": "Enabled"
-                    }
+                    },
+                    "nsgName":"nsg-z-cplus-infra-n-001"
                 }
             ]
         }
