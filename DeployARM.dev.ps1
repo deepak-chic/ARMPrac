@@ -31,8 +31,8 @@ az deployment group create `
    --parameters $templateParameterFile $globalParameterFile
 
 # Deploy the Public IP regarding bastion
-$templateFile = "./PublicKeys/bastion-pk.json"
-$templateParameterFile = "./PublicKeys/bastion-pk-parameters.$environment.json"
+$templateFile = "./PublicKeys/pk-template.json"
+$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
@@ -150,7 +150,7 @@ foreach ( $customer in $customers ) {
       --resource-group $rgCustomerName `
       --template-file $templateFile `
       --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
-      subnetName=$customerSubNetName
+      subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName
 }
 
 # ======================================================================================

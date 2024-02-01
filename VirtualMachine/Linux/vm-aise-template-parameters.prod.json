@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "value": "vm-z-aise-n"  
+            "value": "vm-z-aise-p"  
         },
         "vmSize": {
             "value": "Standard_B2s"
@@ -12,10 +12,10 @@
             "value": 1
         },
         "networkInterfacesName": {
-            "value": "vm-z-aise-n-nic"
+            "value": "vm-z-aise-p-nic"
         },
         "virtualNetworkName": {
-            "value": "vnet-z-cplus-n-001"
+            "value": "vnet-z-cplus-p-001"
             
         },
         "subnetName": {

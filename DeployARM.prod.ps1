@@ -1,11 +1,11 @@
 # Global Variables
-$environment = "dev"
+$environment = "prod"
 $location = "centralus"
 $globalParameterFile = "./global-parameters.$environment.json"
 #================================================================================
 
 # Infra Resource Group and Resources
-$rgInfraName = "rg-z-cplus-infra-n-001"
+$rgInfraName = "rg-z-cplus-infra-p-001"
 
 # Deploy Resource Group
 $templateFile = "./ResourceGroup/resourcegroup-template.json"
@@ -31,8 +31,8 @@ az deployment group create `
    --parameters $templateParameterFile $globalParameterFile
 
 # Deploy the Public IP regarding bastion
-$templateFile = "./PublicKeys/bastion-pk.json"
-$templateParameterFile = "./PublicKeys/bastion-pk-parameters.$environment.json"
+$templateFile = "./PublicKeys/pk-template.json"
+$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
@@ -48,8 +48,8 @@ az deployment group create `
 #=============================================================================================
 
 # AI Resource Group and Resources
-$rgAIName = "rg-z-cplus-ai-n-001"
-$sshKeyName = 'ssh-z-cplus-cus-ai-n-001'
+$rgAIName = "rg-z-cplus-ai-p-001"
+$sshKeyName = 'ssh-z-cplus-cus-ai-p-001'
 
 # Create the resource group
 $templateFile = "./ResourceGroup/resourcegroup-template.json"
@@ -141,7 +141,7 @@ foreach ( $customer in $customers ) {
       --parameters $globalParameterFile name=$rgCustomerName
 
    # Deploy the Oracle DB VM
-   $customerVMName = "vm-z-$customer-n"
+   $customerVMName = "vm-z-$customer-p"
    $customerNICName = "$customerVMName-nic"
    $customerSubNetName = "sn-z-cplus-$customer"
    $templateFile = "./VirtualMachine/Customers/vm-customers-template.json"
@@ -150,7 +150,7 @@ foreach ( $customer in $customers ) {
       --resource-group $rgCustomerName `
       --template-file $templateFile `
       --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
-      subnetName=$customerSubNetName
+      subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName
 }
 
 # ======================================================================================
