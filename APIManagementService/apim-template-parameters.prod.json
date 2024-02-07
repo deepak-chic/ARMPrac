@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "apimName": {
-            "value": "api-z-cplus-infra-p-0010"
+            "value": "api-z-cplus-infra-p-001"
         },
         "skuName": {
             "value": "Developer"

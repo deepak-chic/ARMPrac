@@ -30,21 +30,21 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $templateParameterFile $globalParameterFile
 
-# Deploy the Public IP regarding bastion
-$templateFile = "./PublicKeys/pk-template.json"
-$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgInfraName `
-   --template-file $templateFile `
-   --parameters $templateParameterFile $globalParameterFile
+# # Deploy the Public IPs
+# $templateFile = "./PublicKeys/pk-template.json"
+# $templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgInfraName `
+#    --template-file $templateFile `
+#    --parameters $templateParameterFile $globalParameterFile
 
-# Deploy the Bastion
-$templateFile = "./Bastion/bastion-template.json"
-$templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgInfraName `
-   --template-file $templateFile `
-   --parameters $templateParameterFile $globalParameterFile
+# # Deploy the Bastion
+# $templateFile = "./Bastion/bastion-template.json"
+# $templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgInfraName `
+#    --template-file $templateFile `
+#    --parameters $templateParameterFile $globalParameterFile
 #=============================================================================================
 
 # AI Resource Group and Resources
@@ -173,12 +173,38 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
+# Deploy the API Management
 $templateFile = "./APIManagementService/apim-template.json"
 $templateParameterFile = "./APIManagementService/apim-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
-      
+
+
+# Deploy the Application gateway
+$templateFile = "./ApplicationGetway/ag-template.json"
+#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile
+
+# Deploy the VPN Gateway
+$templateFile = "./VPNGateway/vpngw-template.json"
+#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile
+
+# Deploy the Load Balancer
+$templateFile = "./LoadBalancer/lb-template.json"
+#$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile
 Write-Output "Done the Infra"
+
 

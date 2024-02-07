@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancersName": {
+            "defaultValue": "ilb-z-cplus-ai-n-001",
+            "type": "String"
+        },
+        "virtualNetworksName": {
+            "defaultValue": "vnet-z-cplus-n-001",
+            "type": "String"
+        },
+        "subNetName": {
+            "defaultValue": "sn-z-cplus-infra",
+            "type": "String"
+        },
+        "tags": {
+            "defaultValue": {
+                "Cost Center": "1108-300-8602"
+            },
+            "type": "Object"
+        },
+        "location": {
+            "type": "String",
+            "defaultValue": "centralus"
+        },
+        "skuName":{
+            "type": "string",
+            "defaultValue":"Standard"
+        },
+        "skuTier":{
+            "type": "string",
+            "defaultValue":"Regional"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('loadBalancersName')]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "sku": {
+                "name": "[parameters('skuName')]",
+                "tier": "[parameters('skuTier')]"
+            },
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "iip-z-cplus-ai-n-001",
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/frontendIPConfigurations/iip-z-cplus-ai-n-001')]",
+                        "properties": {
+                            "privateIPAddress": "10.195.114.87",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworksName'), parameters('subnetName'))]"
+                            },
+                            "privateIPAddressVersion": "IPv4"
+                        },
+                        "zones": [
+                            "1",
+                            "2",
+                            "3"
+                        ]
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "bp-z-aire-n-001",
+                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancersName'), 'bp-z-aire-n-001')]",
+                        "properties": {
+                            "loadBalancerBackendAddresses": [
+                                {
+                                    "name": "e9762f29-9a77-4b64-a3e2-69480013a306",
+                                    "properties": {
+                                        "ipAddress": "10.195.114.84",
+                                        "virtualNetwork": {
+                                            "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworksName'))]"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "lbr-cplus-ai-tcp-regional-001",
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/loadBalancingRules/lbr-cplus-ai-tcp-regional-001')]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/frontendIPConfigurations/iip-z-cplus-ai-n-001')]"
+                            },
+                            "frontendPort": 3001,
+                            "backendPort": 3001,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "enableTcpReset": false,
+                            "loadDistribution": "Default",
+                            "disableOutboundSnat": true,
+                            "backendAddressPool": {
+                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancersName'), 'bp-z-aire-n-001')]"
+                            },
+                            "backendAddressPools": [
+                                {
+                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancersName'), 'bp-z-aire-n-001')]"
+                                }
+                            ],
+                            "probe": {
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/probes/lbhp-cplus-ai-tcp-regional-002')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "lbhp-cplus-ai-tcp-regional-001",
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/probes/lbhp-cplus-ai-tcp-regional-001')]",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 9201,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1,
+                            "probeThreshold": 1
+                        }
+                    },
+                    {
+                        "name": "lbhp-cplus-ai-tcp-regional-002",
+                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName')), '/probes/lbhp-cplus-ai-tcp-regional-002')]",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 3001,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1,
+                            "probeThreshold": 1
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundRules": [],
+                "inboundNatPools": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers/backendAddressPools",
+            "apiVersion": "2023-04-01",
+            "name": "[concat(parameters('loadBalancersName'), '/bp-z-aire-n-001')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancersName'))]"
+            ],
+            "properties": {
+                "loadBalancerBackendAddresses": [
+                    {
+                        "name": "e9762f29-9a77-4b64-a3e2-69480013a306",
+                        "properties": {
+                            "ipAddress": "10.195.114.84",
+                            "virtualNetwork": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworksName'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

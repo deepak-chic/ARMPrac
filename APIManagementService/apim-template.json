@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "apimName": {
-            "defaultValue": "api-z-cplus-infra-n-0010",
+            "defaultValue": "api-z-cplus-infra-n-001",
             "type": "String"
         },
         "location": {

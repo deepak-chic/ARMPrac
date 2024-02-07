@@ -22,7 +22,7 @@
         },
         "numberOfInstances": {
             "type": "int",
-            "defaultValue": 2
+            "defaultValue": 3
         },
         "networkInterfacesName": {
             "defaultValue": "vm-z-redis-n-nic",

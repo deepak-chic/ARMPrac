@@ -22,7 +22,7 @@
         },
         "numberOfInstances": {
             "type": "int",
-            "defaultValue": 1
+            "defaultValue": 5
         },
         "networkInterfacesName": {
             "defaultValue": "vm-z-sqld-n-nic",
