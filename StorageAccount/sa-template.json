@@ -15,6 +15,14 @@
         "location": {
             "type": "String",
             "defaultValue": "centralus"
+        },
+        "skuName": {
+            "type": "String",
+            "defaultValue": "Standard_ZRS"
+        },
+        "skuTier": {
+            "type": "String",
+            "defaultValue": "Standard"
         }
     },
     "variables": {},
@@ -26,8 +34,8 @@
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "[parameters('skuName')]",
+                "tier": "[parameters('skuTier')]"
             },
             "kind": "StorageV2",
             "properties": {
@@ -70,8 +78,8 @@
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "[parameters('skuName')]",
+                "tier": "[parameters('skuTier')]"
             },
             "properties": {
                 "changeFeed": {
@@ -103,8 +111,8 @@
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "sku": {
-                "name": "Standard_LRS",
-                "tier": "Standard"
+                "name": "[parameters('skuName')]",
+                "tier": "[parameters('skuTier')]"
             },
             "properties": {
                 "protocolSettings": {

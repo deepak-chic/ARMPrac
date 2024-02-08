@@ -79,7 +79,7 @@
                             "storageAccountType": "StandardSSD_LRS"
                         },
                         "deleteOption": "Delete",
-                        "diskSizeGB": 64
+                        "diskSizeGB": 256
                     },
                     "dataDisks": [],
                     "diskControllerType": "SCSI"

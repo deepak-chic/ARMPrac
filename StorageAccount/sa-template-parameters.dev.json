@@ -4,6 +4,12 @@
     "parameters": {
         "storageAccountName": {
             "value": "saszcplusn0010"
+        },
+        "skuName": {
+            "value": "Standard_LRS"
+        },
+        "skuTier": {
+            "value": "Standard"
         }
     }
 }

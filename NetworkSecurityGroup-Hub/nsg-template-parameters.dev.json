@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "networkSecurityGroupsName": {
-            "value": [ "nsg-z-cplus-ai-p-001", "nsg-z-cplus-db-p-001", "nsg-z-cplus-infra-p-001", "nsg-z-cplus-nstg-p-001", "nsg-z-cplus-plum-p-001" ]
+            "value": [ "nsg-z-cplus-gw-n-001", "nsg-z-cplus-ag-n-001", "nsg-z-cplus-pa-n-001" ]
         }
     }
 }

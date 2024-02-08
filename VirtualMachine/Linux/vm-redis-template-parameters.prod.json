@@ -6,7 +6,7 @@
             "value": "vm-z-redis-p"
         },
         "vmSize": {
-            "value": "Standard_B2s"
+            "value": "Standard_D4s_v3"
         },
         "numberOfInstances": {
             "value": 2

@@ -18,7 +18,7 @@
         },
         "vmSize": {
             "type": "String",
-            "defaultValue": "Standard_B2s"
+            "defaultValue": "Standard_D4s_v3"
         },
         "numberOfInstances": {
             "type": "int",
@@ -80,7 +80,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS"
+                            "storageAccountType": "Premium_ZRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 64

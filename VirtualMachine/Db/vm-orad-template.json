@@ -82,7 +82,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS"
+                            "storageAccountType": "Premium_ZRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 128
@@ -94,7 +94,7 @@
                             "caching": "ReadOnly",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "StandardSSD_LRS",
+                                "storageAccountType": "Premium_ZRS",
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]"
                             },
                             "deleteOption": "Delete",
@@ -107,7 +107,7 @@
                             "caching": "ReadOnly",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "StandardSSD_LRS",
+                                "storageAccountType": "Premium_ZRS",
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1)))]"
                             },
                             "deleteOption": "Detach",
@@ -209,7 +209,7 @@
             "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1))]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS"
+                "name": "Premium_LRS"
             },
             "properties": {
                 "creationData": {
@@ -228,7 +228,7 @@
             "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1))]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS"
+                "name": "Premium_LRS"
             },
             "properties": {
                 "creationData": {

@@ -30,7 +30,7 @@
         },
         "sku":{
             "type": "string",
-            "defaultValue":"VpnGw1"
+            "defaultValue":"VpnGw4AZ"
         }
     },
     "variables": {},

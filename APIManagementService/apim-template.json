@@ -18,7 +18,7 @@
         },
         "skuName": {
             "type": "String",
-            "defaultValue": "Developer"
+            "defaultValue": "Premium"
         },
         "publisherEmail": {
             "type": "String",
