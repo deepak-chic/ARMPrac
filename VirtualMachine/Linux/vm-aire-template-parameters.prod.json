@@ -9,7 +9,7 @@
             "value": "Standard_D4s_v3"
         },
         "numberOfInstances": {
-            "value": 2
+            "value": 4
         },
         "networkInterfacesName": {
             "value": "vm-z-aire-p-nic"

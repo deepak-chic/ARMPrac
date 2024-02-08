@@ -6,10 +6,17 @@
             "value": "vm-z-sqld-p"
         },
         "vmSize": {
-            "value": "Standard_B2s"
+            "value": [
+                "Standard_E8as_v5",
+                "Standard_E8as_v5",
+                "Standard_E8as_v5",
+                "Standard_E20as_v5",
+                "Standard_E20as_v5",
+                "Standard_E8as_v5"
+            ]
         },
         "numberOfInstances": {
-            "value": 1
+            "value": 6
         },
         "networkInterfacesName": {
             "value": "vm-z-sqld-p-nic"

@@ -17,12 +17,12 @@
             "type": "Object"
         },
         "vmSize": {
-            "type": "String",
-            "defaultValue": "Standard_B2s"
+            "type": "array",
+            "defaultValue": ["Standard_B2s"]
         },
         "numberOfInstances": {
             "type": "int",
-            "defaultValue": 5
+            "defaultValue": 6
         },
         "networkInterfacesName": {
             "defaultValue": "vm-z-sqld-n-nic",
@@ -59,7 +59,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[parameters('vmSize')]"
+                    "vmSize": "[parameters('vmSize')[copyIndex()]]"
                 },
                 "additionalCapabilities": {
                     "hibernationEnabled": false
@@ -77,23 +77,23 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS"
+                            "storageAccountType": "Premium_LRS"
                         },
                         "deleteOption": "Delete",
-                        "diskSizeGB": 127
+                        "diskSizeGB": 256
                     },
                     "dataDisks": [ {
                             "lun": 0,
                             //"name": "[format('{0}_{1}_{2:000}', parameters('virtualMachine_name'), 'datadisk1', copyIndex(1))]",
                             "createOption": "Attach",
-                            "caching": "ReadOnly",
+                            "caching": "None",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
                                 "storageAccountType": "Premium_LRS",
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]"
                             },
                             "deleteOption": "Delete",
-                            "diskSizeGB": 512,
+                            "diskSizeGB": 4096,
                             "toBeDetached": false
                         }],
                     "diskControllerType": "SCSI"
@@ -177,7 +177,7 @@
         },
         {
             "type": "Microsoft.Compute/disks",
-            "apiVersion": "2018-06-01",
+            "apiVersion": "2023-01-02",
             "copy": {
                 "name": "DataDiskLoop",
                 "count": "[parameters('numberOfInstances')]"
@@ -185,13 +185,13 @@
             "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1))]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Standard_LRS"
+                "name": "Premium_LRS"
             },
             "properties": {
                 "creationData": {
                     "createOption": "Empty"
                 },
-                "diskSizeGB": 512
+                "diskSizeGB": 4096
             }
         }
     ]

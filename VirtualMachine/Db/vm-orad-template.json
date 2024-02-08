@@ -18,7 +18,7 @@
         },
         "vmSize": {
             "type": "String",
-            "defaultValue": "Standard_D4s_v3"
+            "defaultValue": "Standard_E4as_v5"
         },
         "numberOfInstances": {
             "type": "int",
@@ -82,7 +82,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "storageAccountType": "Premium_ZRS"
+                            "storageAccountType": "Premium_LRS"
                         },
                         "deleteOption": "Delete",
                         "diskSizeGB": 128
@@ -94,7 +94,7 @@
                             "caching": "ReadOnly",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "Premium_ZRS",
+                                "storageAccountType": "Premium_LRS",
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]"
                             },
                             "deleteOption": "Delete",
@@ -107,7 +107,7 @@
                             "caching": "ReadOnly",
                             "writeAcceleratorEnabled": false,
                             "managedDisk": {
-                                "storageAccountType": "Premium_ZRS",
+                                "storageAccountType": "Premium_LRS",
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1)))]"
                             },
                             "deleteOption": "Detach",
