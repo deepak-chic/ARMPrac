@@ -73,7 +73,7 @@
                     "imageReference": {
                         "publisher": "RedHat",
                         "offer": "RHEL",
-                        "sku": "79-gen2",
+                        "sku": "8-lvm-gen2",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -98,7 +98,6 @@
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk1', copyIndex(1)))]"
                             },
                             "deleteOption": "Delete",
-                            "diskSizeGB": 1024,
                             "toBeDetached": false
                         },
                         {
@@ -111,7 +110,6 @@
                                 "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk2', copyIndex(1)))]"
                             },
                             "deleteOption": "Detach",
-                            "diskSizeGB": 256,
                             "toBeDetached": false
                         }
                     ],
@@ -215,7 +213,7 @@
                 "creationData": {
                     "createOption": "Empty"
                 },
-                "diskSizeGB": 1024
+                "diskSizeGB": 2048
             }
         },
         {
@@ -234,7 +232,7 @@
                 "creationData": {
                     "createOption": "Empty"
                 },
-                "diskSizeGB": 256
+                "diskSizeGB": 2048
             }
         }
     ]

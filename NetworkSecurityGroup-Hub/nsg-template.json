@@ -58,6 +58,16 @@
             "properties": {
                 "securityRules": []
             }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[4]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
         }
     ]
 }

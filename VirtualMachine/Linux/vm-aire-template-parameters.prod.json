@@ -6,7 +6,7 @@
             "value": "vm-z-aire-p"
         },
         "vmSize": {
-            "value": "Standard_D4s_v3"
+            "value": "Standard_F8s_v2"
         },
         "numberOfInstances": {
             "value": 4

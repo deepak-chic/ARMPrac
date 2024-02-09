@@ -75,6 +75,18 @@
                         "privateLinkServiceNetworkPolicies": "Enabled"
                     },
                     "nsgName":"nsg-z-cplus-apn-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-infragw",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.195.79.192/26"
+                        ],
+                        "delegations": [],
+                        "privateEndpointNetworkPolicies": "Disabled",
+                        "privateLinkServiceNetworkPolicies": "Enabled"
+                    },
+                    "nsgName":"nsg-z-cplus-infragw-p-001"
                 }
             ]
         }

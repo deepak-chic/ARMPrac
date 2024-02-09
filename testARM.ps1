@@ -3,15 +3,6 @@ $location = "centralus"
 $globalParameterFile = "./global-parameters.$environment.json"
 $rgInfraName = "rg-z-cplus-infra-p-001"
 
-# Deploy the Load Balancer
-$templateFile = "./LoadBalancer/lb-template.json"
-$templateParameterFile = "./LoadBalancer/lb-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgInfraName `
-   --template-file $templateFile `
-   --parameters $globalParameterFile $templateParameterFile
-Write-Output "Done the Infra"
-
 $rgHubName = "rg-z-cplus-gw-p-001"
 
 # # Deploy the API Management
@@ -30,12 +21,12 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
-# Deploy the VPN Gateway
-$templateFile = "./VPNGateway/vpngw-template.json"
-$templateParameterFile = "./VPNGateway/vpngw-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgHubName `
-   --template-file $templateFile `
-   --parameters $globalParameterFile $templateParameterFile
+# # Deploy the VPN Gateway
+# $templateFile = "./VPNGateway/vpngw-template.json"
+# $templateParameterFile = "./VPNGateway/vpngw-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgHubName `
+#    --template-file $templateFile `
+#    --parameters $globalParameterFile $templateParameterFile
 
 

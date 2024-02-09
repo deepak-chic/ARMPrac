@@ -36,9 +36,9 @@
             "defaultValue": "sn-z-cplus-ai",
             "type": "String"
         },
-        "sshKeyName":{
+        "sshKeyName": {
             "type": "string",
-            "defaultValue":"vm-z-aise-n-001-key"
+            "defaultValue": "vm-z-aise-n-001-key"
         },
         "infraResourceGroupName": {
             "defaultValue": "rg-z-cplus-infra-n-001",
@@ -58,7 +58,8 @@
                 "count": "[parameters('numberOfInstances')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]"
+                "[concat('Microsoft.Network/networkInterfaces/', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
+                "[concat('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk', copyIndex(1)))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -85,7 +86,20 @@
                         "deleteOption": "Delete",
                         "diskSizeGB": 64
                     },
-                    "dataDisks": [],
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "createOption": "Attach",
+                            "caching": "ReadOnly",
+                            "writeAcceleratorEnabled": false,
+                            "managedDisk": {
+                                "storageAccountType": "Premium_LRS",
+                                "id": "[resourceId('Microsoft.Compute/disks/', format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk', copyIndex(1)))]"
+                            },
+                            "deleteOption": "Delete",
+                            "toBeDetached": false
+                        }
+                    ],
                     "diskControllerType": "SCSI"
                 },
                 "osProfile": {
@@ -162,6 +176,25 @@
                 "nicType": "Standard",
                 "auxiliaryMode": "None",
                 "auxiliarySku": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2018-06-01",
+            "copy": {
+                "name": "DataDiskLoop",
+                "count": "[parameters('numberOfInstances')]"
+            },
+            "name": "[format('{0}_{1}-{2:000}', parameters('virtualMachineName'), 'datadisk', copyIndex(1))]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Premium_LRS"
+            },
+            "properties": {
+                "creationData": {
+                    "createOption": "Empty"
+                },
+                "diskSizeGB": 512
             }
         }
     ]

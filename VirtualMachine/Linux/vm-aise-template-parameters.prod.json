@@ -6,7 +6,7 @@
             "value": "vm-z-aise-p"  
         },
         "vmSize": {
-            "value": "Standard_D4s_v3"
+            "value": "Standard_D8s_v4"
         },
         "numberOfInstances": {
             "value": 1

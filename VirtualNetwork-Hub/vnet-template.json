@@ -100,6 +100,18 @@
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[4].nsgName)]"
                             }
                         }
+                    },
+                    {
+                        "name": "[parameters('subnets')[5].name]",
+                        "properties": {
+                            "addressPrefixes": "[parameters('subnets')[5].properties.addressPrefixes]",
+                            "delegations": "[parameters('subnets')[5].properties.delegations]",
+                            "privateEndpointNetworkPolicies": "[parameters('subnets')[5].properties.privateEndpointNetworkPolicies]",
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[5].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[5].nsgName)]"
+                            }
+                        }
                     }
                 ]
             }

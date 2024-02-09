@@ -35,20 +35,20 @@ az deployment group create `
    --parameters $templateParameterFile $globalParameterFile
 
 # Deploy the Public IPs
-# $templateFile = "./PublicKeys/pk-template.json"
-# $templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
-# az deployment group create `
-#    --resource-group $rgHubName `
-#    --template-file $templateFile `
-#    --parameters $templateParameterFile $globalParameterFile
+$templateFile = "./PublicKeys/pk-template.json"
+$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgHubName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
 
 # # Deploy the Bastion
-# $templateFile = "./Bastion/bastion-template.json"
-# $templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
-# az deployment group create `
-#    --resource-group $rgHubName `
-#    --template-file $templateFile `
-#    --parameters $templateParameterFile $globalParameterFile
+$templateFile = "./Bastion/bastion-template.json"
+$templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgHubName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
 
 #==================================================================================
 # Infra Resource Group and Resources

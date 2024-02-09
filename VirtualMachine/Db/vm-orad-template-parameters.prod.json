@@ -6,7 +6,7 @@
             "value": "vm-z-orad-p"
         },
         "vmSize": {
-            "value": "Standard_E4as_v5"
+            "value": "Standard_E8as_v5"
         },
         "numberOfInstances": {
             "value": 1
