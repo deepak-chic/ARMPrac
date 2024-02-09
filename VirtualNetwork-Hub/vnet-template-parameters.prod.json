@@ -56,7 +56,7 @@
                     "name": "sn-z-cplus-palo",
                     "properties": {
                         "addressPrefixes": [
-                            "10.195.79.127/26"
+                            "10.195.79.128/26"
                         ],
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",

@@ -1,3 +1,6 @@
+# az login
+# az account set --subscription "98c9fc03-50f3-4c3e-9e48-7d7564da1472"  
+
 # Global Variables
 $environment = "prod"
 $location = "centralus"
@@ -19,7 +22,7 @@ az deployment sub create `
 $templateFile = "./NetworkSecurityGroup-Hub/nsg-template.json"
 $templateParameterFile = "./NetworkSecurityGroup-Hub/nsg-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgInfraName `
+   --resource-group $rgHubName `
    --template-file $templateFile `
    --parameters $templateParameterFile $globalParameterFile
 
@@ -27,7 +30,7 @@ az deployment group create `
 $templateFile = "./VirtualNetwork-Hub/vnet-template.json"
 $templateParameterFile = "./VirtualNetwork-Hub/vnet-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgInfraName `
+   --resource-group $rgHubName `
    --template-file $templateFile `
    --parameters $templateParameterFile $globalParameterFile
 
@@ -35,7 +38,7 @@ az deployment group create `
 # $templateFile = "./PublicKeys/pk-template.json"
 # $templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
 # az deployment group create `
-#    --resource-group $rgInfraName `
+#    --resource-group $rgHubName `
 #    --template-file $templateFile `
 #    --parameters $templateParameterFile $globalParameterFile
 
@@ -43,7 +46,7 @@ az deployment group create `
 # $templateFile = "./Bastion/bastion-template.json"
 # $templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
 # az deployment group create `
-#    --resource-group $rgInfraName `
+#    --resource-group $rgHubName `
 #    --template-file $templateFile `
 #    --parameters $templateParameterFile $globalParameterFile
 
@@ -67,8 +70,8 @@ az deployment group create `
    --parameters $templateParameterFile $globalParameterFile
    
 # Deploy Infra Virtual Network
-$templateFile = "./VirtualNetwork/vnet-template.json"
-$templateParameterFile = "./VirtualNetwork/vnet-template-parameters.$environment.json"
+$templateFile = "./VirtualNetwork-Infra/vnet-template.json"
+$templateParameterFile = "./VirtualNetwork-Infra/vnet-template-parameters.$environment.json"
 az deployment group create `
    --resource-group $rgInfraName `
    --template-file $templateFile `
@@ -170,7 +173,7 @@ $customers = @( @{'name'='publ';"size" = "Standard_D4_v4"},
 @{'name'='emrl';"size" = "Standard_E4as_v5"})
 
 foreach ( $customer in $customers ) {
-   $rgCustomerName = "rg-z-cplus-$($customer.name)-n-001"
+   $rgCustomerName = "rg-z-cplus-$($customer.name)-p-001"
 
    $templateFile = "./ResourceGroup/resourcegroup-template.json"
    az deployment sub create `

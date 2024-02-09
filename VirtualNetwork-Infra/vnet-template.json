@@ -31,6 +31,10 @@
                 }
             ],
             "type": "Array"
+        },
+        "virtualNetworks_vnet_z_cushub_001_externalid": {
+            "defaultValue": "/subscriptions/98c9fc03-50f3-4c3e-9e48-7d7564da1472/resourceGroups/rg-z-cop-cus-hub-p-001/providers/Microsoft.Network/virtualNetworks/vnet-z-cushub-001",
+            "type": "String"
         }
     },
     "variables": {
@@ -46,6 +50,19 @@
                 "addressSpace": {
                     "addressPrefixes": "[parameters('addressPrefixes')]"
                 },
+                                "encryption": {
+                    "enabled": false,
+                    "enforcement": "AllowUnencrypted"
+                },
+                "dhcpOptions": {
+                    "dnsServers": [
+                        "10.195.9.4",
+                        "10.195.9.5",
+                        "10.219.29.11",
+                        "10.219.29.12"
+                    ]
+                },
+
                 "subnets": [
                     {
                         "name": "[parameters('subnets')[0].name]",
@@ -212,7 +229,71 @@
                             }
                         }
                     }
-                ]
+                ],
+                "virtualNetworkPeerings": [
+                    {
+                        "name": "ConnectPlusVNet_To_HUBVNet",
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/virtualNetworkPeerings', parameters('virtualNetworkName'), 'ConnectPlusVNet_To_HUBVNet')]",
+                        "properties": {
+                            "peeringState": "Connected",
+                            "peeringSyncLevel": "FullyInSync",
+                            "remoteVirtualNetwork": {
+                                "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
+                            },
+                            "allowVirtualNetworkAccess": true,
+                            "allowForwardedTraffic": true,
+                            "allowGatewayTransit": true,
+                            "useRemoteGateways": true,
+                            "doNotVerifyRemoteGateways": false,
+                            "remoteAddressSpace": {
+                                "addressPrefixes": [
+                                    "10.195.0.0/24",
+                                    "10.195.4.0/24"
+                                ]
+                            },
+                            "remoteVirtualNetworkAddressSpace": {
+                                "addressPrefixes": [
+                                    "10.195.0.0/24",
+                                    "10.195.4.0/24"
+                                ]
+                            }
+                        },
+                        "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+                    }
+                ],
+                "enableDdosProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2023-04-01",
+            "name": "[concat(parameters('virtualNetworkName'), '/ConnectPlusVNet_To_HUBVNet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "peeringState": "Connected",
+                "peeringSyncLevel": "FullyInSync",
+                "remoteVirtualNetwork": {
+                    "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
+                },
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": true,
+                "allowGatewayTransit": true,
+                "useRemoteGateways": true,
+                "doNotVerifyRemoteGateways": false,
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.195.0.0/24",
+                        "10.195.4.0/24"
+                    ]
+                },
+                "remoteVirtualNetworkAddressSpace": {
+                    "addressPrefixes": [
+                        "10.195.0.0/24",
+                        "10.195.4.0/24"
+                    ]
+                }
             }
         }
     ]

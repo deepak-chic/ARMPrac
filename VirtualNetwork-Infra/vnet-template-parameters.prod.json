@@ -55,7 +55,7 @@
                     "name": "sn-z-cplus-migration",
                     "properties": {
                         "addressPrefixes": [
-                            "10.195.65.96/25"
+                            "10.195.65.128/25"
                         ],
                         "delegations": [],
                         "privateEndpointNetworkPolicies": "Disabled",

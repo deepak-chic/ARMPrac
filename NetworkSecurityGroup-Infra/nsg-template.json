@@ -68,6 +68,106 @@
             "properties": {
                 "securityRules": []
             }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[5]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[6]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[7]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[8]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[9]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[10]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[11]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[12]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[13]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {            
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2023-04-01",
+            "name": "[parameters('networkSecurityGroupsName')[14]]",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('tags')]",
+            "properties": {
+                "securityRules": []
+            }
         }
     ]
 }
