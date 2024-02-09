@@ -1,30 +1,41 @@
-$environment = "dev"
+$environment = "prod"
 $location = "centralus"
 $globalParameterFile = "./global-parameters.$environment.json"
-$rgInfraName = "rg-z-cplus-infra-n-001"
-$sshKeyName = "ssh-z-cplus-cus-db-n-001"
+$rgInfraName = "rg-z-cplus-infra-p-001"
 
-$customers = @( 
-@{'name'='publ';"size" = "Standard_D4_v4"})
+# Deploy the Load Balancer
+$templateFile = "./LoadBalancer/lb-template.json"
+$templateParameterFile = "./LoadBalancer/lb-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
+Write-Output "Done the Infra"
 
-foreach ( $customer in $customers ) {
-   $rgCustomerName = "rg-z-cplus-$($customer.name)-p-001"
+$rgHubName = "rg-z-cplus-gw-p-001"
 
-   $templateFile = "./ResourceGroup/resourcegroup-template.json"
-   az deployment sub create `
-      --location $location `
-      --template-file $templateFile `
-      --parameters $globalParameterFile name=$rgCustomerName
+# # Deploy the API Management
+# $templateFile = "./APIManagementService/apim-template.json"
+# $templateParameterFile = "./APIManagementService/apim-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgHubName `
+#    --template-file $templateFile `
+#    --parameters $globalParameterFile $templateParameterFile
 
-   # Deploy the Customer VM
-   $customerVMName = "vm-z-$($customer.name)-p"
-   $customerNICName = "$customerVMName-nic"
-   $customerSubNetName = "sn-z-cplus-$($customer.name)"
-   $templateFile = "./VirtualMachine/Customers/vm-customers-template.json"
-   $templateParameterFile = "./VirtualMachine/Customers/vm-customers-template-parameters.$environment.json"
-   az deployment group create `
-      --resource-group $rgCustomerName `
-      --template-file $templateFile `
-      --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
-      subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName vmSize=$($customer.size)
-}
+# Deploy the Application gateway
+$templateFile = "./ApplicationGetway/ag-template.json"
+$templateParameterFile = "./ApplicationGetway/ag-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgHubName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
+
+# Deploy the VPN Gateway
+$templateFile = "./VPNGateway/vpngw-template.json"
+$templateParameterFile = "./VPNGateway/vpngw-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgHubName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
+
+

@@ -24,7 +24,7 @@
                         "privateLinkServiceNetworkPolicies": "Enabled",
                         "defaultOutboundAccess": true
                     },
-                    "nsgName":"nsg-z-cplus-gw-p-001"
+                    "nsgName":""
                 },
                 {
                     "name": "AzureBastionSubnet",

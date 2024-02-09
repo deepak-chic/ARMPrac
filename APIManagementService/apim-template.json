@@ -33,7 +33,7 @@
             "defaultValue": "sn-z-cplus-infra"
         },
         "publicIPAddressesName": {
-            "defaultValue": "pip-z-cplus-api-n-001",
+            "defaultValue": "pip-z-cplus-api-p-001",
             "type": "String"
         }
     },

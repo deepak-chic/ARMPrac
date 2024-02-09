@@ -71,7 +71,10 @@
                             "addressPrefixes": "[parameters('subnets')[2].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[2].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[2].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[2].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[2].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[2].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -80,7 +83,10 @@
                             "addressPrefixes": "[parameters('subnets')[3].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[3].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[3].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[3].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[3].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[3].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -89,7 +95,10 @@
                             "addressPrefixes": "[parameters('subnets')[4].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[4].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[4].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[4].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[4].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[4].nsgName)]"
+                            }
                         }
                     }
                 ]

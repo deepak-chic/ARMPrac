@@ -214,11 +214,23 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
+   # Deploy the Load Balancer
+$templateFile = "./LoadBalancer/lb-template.json"
+$templateParameterFile = "./LoadBalancer/lb-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $globalParameterFile $templateParameterFile
+
+# ========================================================================================
+# Deploy other resources for Hub Resource Group
+$rgHubName = "rg-z-cplus-gw-p-001"
+
 # Deploy the API Management
 $templateFile = "./APIManagementService/apim-template.json"
 $templateParameterFile = "./APIManagementService/apim-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgInfraName `
+   --resource-group $rgHubName `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
@@ -226,7 +238,7 @@ az deployment group create `
 $templateFile = "./ApplicationGetway/ag-template.json"
 $templateParameterFile = "./ApplicationGetway/ag-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgInfraName `
+   --resource-group $rgHubName `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
@@ -234,17 +246,10 @@ az deployment group create `
 $templateFile = "./VPNGateway/vpngw-template.json"
 $templateParameterFile = "./VPNGateway/vpngw-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgInfraName `
+   --resource-group $rgHubName `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
-# Deploy the Load Balancer
-$templateFile = "./LoadBalancer/lb-template.json"
-$templateParameterFile = "./LoadBalancer/lb-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgInfraName `
-   --template-file $templateFile `
-   --parameters $globalParameterFile $templateParameterFile
+
 Write-Output "Done the Infra"
-
 

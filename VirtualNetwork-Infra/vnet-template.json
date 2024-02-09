@@ -70,7 +70,10 @@
                             "addressPrefixes": "[parameters('subnets')[0].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[0].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[0].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[0].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[0].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[0].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -79,7 +82,10 @@
                             "addressPrefixes": "[parameters('subnets')[1].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[1].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[1].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[1].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[1].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[1].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -88,7 +94,10 @@
                             "addressPrefixes": "[parameters('subnets')[2].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[2].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[2].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[2].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[2].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[2].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -97,7 +106,10 @@
                             "addressPrefixes": "[parameters('subnets')[3].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[3].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[3].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[3].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[3].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[3].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -106,7 +118,10 @@
                             "addressPrefixes": "[parameters('subnets')[4].properties.addressPrefixes]",
                             "delegations": "[parameters('subnets')[4].properties.delegations]",
                             "privateEndpointNetworkPolicies": "[parameters('subnets')[4].properties.privateEndpointNetworkPolicies]",
-                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[4].properties.privateLinkServiceNetworkPolicies]"
+                            "privateLinkServiceNetworkPolicies": "[parameters('subnets')[4].properties.privateLinkServiceNetworkPolicies]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnets')[4].nsgName)]"
+                            }
                         }
                     },
                     {
@@ -230,71 +245,71 @@
                         }
                     }
                 ],
-                "virtualNetworkPeerings": [
-                    {
-                        "name": "ConnectPlusVNet_To_HUBVNet",
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/virtualNetworkPeerings', parameters('virtualNetworkName'), 'ConnectPlusVNet_To_HUBVNet')]",
-                        "properties": {
-                            "peeringState": "Connected",
-                            "peeringSyncLevel": "FullyInSync",
-                            "remoteVirtualNetwork": {
-                                "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
-                            },
-                            "allowVirtualNetworkAccess": true,
-                            "allowForwardedTraffic": true,
-                            "allowGatewayTransit": true,
-                            "useRemoteGateways": true,
-                            "doNotVerifyRemoteGateways": false,
-                            "remoteAddressSpace": {
-                                "addressPrefixes": [
-                                    "10.195.0.0/24",
-                                    "10.195.4.0/24"
-                                ]
-                            },
-                            "remoteVirtualNetworkAddressSpace": {
-                                "addressPrefixes": [
-                                    "10.195.0.0/24",
-                                    "10.195.4.0/24"
-                                ]
-                            }
-                        },
-                        "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
-                    }
-                ],
+                // "virtualNetworkPeerings": [
+                //     {
+                //         "name": "ConnectPlusVNet_To_HUBVNet",
+                //         "id": "[resourceId('Microsoft.Network/virtualNetworks/virtualNetworkPeerings', parameters('virtualNetworkName'), 'ConnectPlusVNet_To_HUBVNet')]",
+                //         "properties": {
+                //             "peeringState": "Connected",
+                //             "peeringSyncLevel": "FullyInSync",
+                //             "remoteVirtualNetwork": {
+                //                 "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
+                //             },
+                //             "allowVirtualNetworkAccess": true,
+                //             "allowForwardedTraffic": true,
+                //             "allowGatewayTransit": true,
+                //             "useRemoteGateways": true,
+                //             "doNotVerifyRemoteGateways": false,
+                //             "remoteAddressSpace": {
+                //                 "addressPrefixes": [
+                //                     "10.195.0.0/24",
+                //                     "10.195.4.0/24"
+                //                 ]
+                //             },
+                //             "remoteVirtualNetworkAddressSpace": {
+                //                 "addressPrefixes": [
+                //                     "10.195.0.0/24",
+                //                     "10.195.4.0/24"
+                //                 ]
+                //             }
+                //         },
+                //         "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+                //     }
+                // ],
                 "enableDdosProtection": false
             }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "apiVersion": "2023-04-01",
-            "name": "[concat(parameters('virtualNetworkName'), '/ConnectPlusVNet_To_HUBVNet')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
-            ],
-            "properties": {
-                "peeringState": "Connected",
-                "peeringSyncLevel": "FullyInSync",
-                "remoteVirtualNetwork": {
-                    "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
-                },
-                "allowVirtualNetworkAccess": true,
-                "allowForwardedTraffic": true,
-                "allowGatewayTransit": true,
-                "useRemoteGateways": true,
-                "doNotVerifyRemoteGateways": false,
-                "remoteAddressSpace": {
-                    "addressPrefixes": [
-                        "10.195.0.0/24",
-                        "10.195.4.0/24"
-                    ]
-                },
-                "remoteVirtualNetworkAddressSpace": {
-                    "addressPrefixes": [
-                        "10.195.0.0/24",
-                        "10.195.4.0/24"
-                    ]
-                }
-            }
         }
+        // {
+        //     "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+        //     "apiVersion": "2023-04-01",
+        //     "name": "[concat(parameters('virtualNetworkName'), '/ConnectPlusVNet_To_HUBVNet')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+        //     ],
+        //     "properties": {
+        //         "peeringState": "Connected",
+        //         "peeringSyncLevel": "FullyInSync",
+        //         "remoteVirtualNetwork": {
+        //             "id": "[parameters('virtualNetworks_vnet_z_cushub_001_externalid')]"
+        //         },
+        //         "allowVirtualNetworkAccess": true,
+        //         "allowForwardedTraffic": true,
+        //         "allowGatewayTransit": true,
+        //         "useRemoteGateways": true,
+        //         "doNotVerifyRemoteGateways": false,
+        //         "remoteAddressSpace": {
+        //             "addressPrefixes": [
+        //                 "10.195.0.0/24",
+        //                 "10.195.4.0/24"
+        //             ]
+        //         },
+        //         "remoteVirtualNetworkAddressSpace": {
+        //             "addressPrefixes": [
+        //                 "10.195.0.0/24",
+        //                 "10.195.4.0/24"
+        //             ]
+        //         }
+        //     }
+        // }
     ]
 }

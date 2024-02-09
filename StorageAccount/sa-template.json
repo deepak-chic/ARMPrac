@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccountName": {
-            "defaultValue": "saszcplusn0010",
+            "defaultValue": "saszcplusn001",
             "type": "String"
         },
          "tags": {
