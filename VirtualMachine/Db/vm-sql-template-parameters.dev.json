@@ -5,19 +5,6 @@
         "virtualMachineName": {
             "value": "vm-z-sqld-n"
         },
-        "vmSize": {
-            "value": [
-                "Standard_E8as_v5",
-                "Standard_E8as_v5",
-                "Standard_E8as_v5",
-                "Standard_E20as_v5",
-                "Standard_E20as_v5",
-                "Standard_E8as_v5"
-            ]
-        },
-        "numberOfInstances": {
-            "value": 2
-        },
         "networkInterfacesName": {
             "value": "vm-z-sqld-n-nic"
         },

@@ -1,5 +1,5 @@
 # az login
-# az account set --subscription "98c9fc03-50f3-4c3e-9e48-7d7564da1472"  
+# az account set --subscription "bd838b1b-c6fb-480b-a0d8-2ef04ce8c1db"  
 
 # Global Variables
 $environment = "prod"
@@ -34,21 +34,21 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $templateParameterFile $globalParameterFile
 
-# Deploy the Public IPs
-$templateFile = "./PublicKeys/pk-template.json"
-$templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgHubName `
-   --template-file $templateFile `
-   --parameters $templateParameterFile $globalParameterFile
+# # Deploy the Public IPs
+# $templateFile = "./PublicKeys/pk-template.json"
+# $templateParameterFile = "./PublicKeys/pk-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgHubName `
+#    --template-file $templateFile `
+#    --parameters $templateParameterFile $globalParameterFile
 
-# # Deploy the Bastion
-$templateFile = "./Bastion/bastion-template.json"
-$templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
-az deployment group create `
-   --resource-group $rgHubName `
-   --template-file $templateFile `
-   --parameters $templateParameterFile $globalParameterFile
+# # # Deploy the Bastion
+# $templateFile = "./Bastion/bastion-template.json"
+# $templateParameterFile = "./Bastion/bastion-template-parameters.$environment.json"
+# az deployment group create `
+#    --resource-group $rgHubName `
+#    --template-file $templateFile `
+#    --parameters $templateParameterFile $globalParameterFile
 
 #==================================================================================
 # Infra Resource Group and Resources
@@ -124,8 +124,8 @@ az deployment group create `
 # # #=============================================================================================
 # DB Resource Group and Resources
 
-$rgDBName = "rg-z-cplus-db-n-001"
-$sshKeyName = 'ssh-z-cplus-cus-db-n-001'
+$rgDBName = "rg-z-cplus-db-p-001"
+$sshKeyName = 'ssh-z-cplus-cus-db-p-001'
 
 # Create the resource group
 $templateFile = "./ResourceGroup/resourcegroup-template.json"
@@ -153,23 +153,35 @@ az deployment group create `
 # Deploy the SQL DB VM
 $templateFile = "./VirtualMachine/Db/vm-sql-template.json"
 $templateParameterFile = "./VirtualMachine/Db/vm-sql-template-parameters.$environment.json"
-az deployment group create `
+$vmSizes = @('Standard_E8as_v5', 'Standard_E8as_v5', 'Standard_E8as_v5', 'Standard_E20as_v5', 'Standard_E20as_v5', 'Standard_E8as_v5')
+$noOfInstance = $vmSizes.count
+$counter = 1
+while($counter -le $noOfInstance)
+{
+   $vmName = "vm-z-sqld-p-$($counter.ToString('000'))"
+   $nicName = "$vmName-nic"
+   
+   az deployment group create `
    --resource-group $rgDBName `
    --template-file $templateFile `
-   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName `
+   virtualMachineName=$vmName vmSize=$($vmSizes[$counter-1]) networkInterfacesName=$nicName
+
+   $counter +=1
+}
 
 # #=============================================================================================
 # Customer Resource Group and Resources
 
-$customers = @( @{'name'='publ';"size" = "Standard_D4_v4"}, 
-@{'name'='groc';"size" = "Standard_D4_v4"}, 
+$customers = @( @{'name'='publ';"size" = "Standard_D4s_v5"}, 
+@{'name'='groc';"size" = "Standard_D4s_v5"}, 
 @{'name'='cole';"size" = "Standard_E4as_v5"}, 
 @{'name'='amaz';"size" = "Standard_E8as_v5"}, 
 @{'name'='amsk';"size" = "Standard_E8as_v5"}, 
 @{'name'='meij';"size" = "Standard_E8as_v5"}, 
-@{'name'='whol';"size" = "Standard_D8_v4"}, 
-@{'name'='waca';"size" = "Standard_D8_v4"}, 
-@{'name'='cobo';"size" = "Standard_D2_v4"}, 
+@{'name'='whol';"size" = "Standard_D8s_v5"}, 
+@{'name'='waca';"size" = "Standard_D8s_v5"}, 
+@{'name'='cobo';"size" = "Standard_D2s_v5"}, 
 @{'name'='emrl';"size" = "Standard_E4as_v5"})
 
 foreach ( $customer in $customers ) {
