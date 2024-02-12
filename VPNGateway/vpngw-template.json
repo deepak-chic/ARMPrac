@@ -70,20 +70,7 @@
                 "vpnType": "RouteBased",
                 "enableBgp": false,
                 "activeActive": false,
-                "bgpSettings": {
-                    "asn": 65515,
-                    "bgpPeeringAddress": "10.195.112.158",
-                    "peerWeight": 0,
-                    "bgpPeeringAddresses": [
-                        {
-                            "ipconfigurationId": "[concat(resourceId('Microsoft.Network/virtualNetworkGateways', parameters('virtualNetworkGatewaysName')), '/ipConfigurations/default')]",
-                            "customBgpIpAddresses": []
-                        }
-                    ]
-                },
-                "vpnGatewayGeneration": "Generation1",
-                "allowRemoteVnetTraffic": false,
-                "allowVirtualWanTraffic": false
+                "vpnGatewayGeneration": "Generation2"
             }
         }
     ]

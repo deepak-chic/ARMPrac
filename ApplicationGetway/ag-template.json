@@ -50,7 +50,6 @@
                 "gatewayIPConfigurations": [
                     {
                         "name": "appGatewayIpConfig",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/gatewayIPConfigurations/appGatewayIpConfig')]",
                         "properties": {
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
@@ -65,7 +64,6 @@
                 "frontendIPConfigurations": [
                     {
                         "name": "appGwPublicFrontendIpIPv4",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
@@ -76,74 +74,21 @@
                 ],
                 "frontendPorts": [
                     {
-                        "name": "port_81",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_81')]",
+                       "name": "port_80",
                         "properties": {
-                            "port": 81
-                        }
-                    },
-                    {
-                        "name": "port_80",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_80')]",
-                        "properties": {
-                            "port": 80
-                        }
-                    },
-                    {
-                        "name": "port_82",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_82')]",
-                        "properties": {
-                            "port": 82
-                        }
-                    },
-                    {
-                        "name": "port_8090",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_8090')]",
-                        "properties": {
-                            "port": 8090
+                            "Port": 80
                         }
                     }
                 ],
                 "backendAddressPools": [
-                    {
-                        "name": "bp-nstg-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-nstg-n')]",
+                   {
+                        "name": "TestPool",
                         "properties": {
                             "backendAddresses": []
                         }
                     },
                     {
-                        "name": "bp-plum-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-plum-n')]",
-                        "properties": {
-                            "backendAddresses": []
-                        }
-                    },
-                    {
-                        "name": "bp-api-devportal-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-api-devportal-n')]",
-                        "properties": {
-                            "backendAddresses": [
-                                {
-                                    "fqdn": "api-z-cplus-infra-n-001.developer.azure-api.net"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "name": "bp-api-gw-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-api-gw-n')]",
-                        "properties": {
-                            "backendAddresses": [
-                                {
-                                    "fqdn": "api-z-cplus-infra-n-001.azure-api.net"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "name": "bp-ai-services-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-ai-services-n')]",
+                        "name": "TestBackendTarget",
                         "properties": {
                             "backendAddresses": []
                         }
@@ -152,73 +97,11 @@
                 "loadDistributionPolicies": [],
                 "backendHttpSettingsCollection": [
                     {
-                        "name": "bs-nstg-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-nstg-n-001')]",
+                        "name": "TestBackendSetting",
                         "properties": {
-                            "port": 80,
-                            "protocol": "Http",
+                            "Port": 80,
+                            "Protocol": "Http",
                             "cookieBasedAffinity": "Disabled",
-                            "pickHostNameFromBackendAddress": false,
-                            "affinityCookieName": "ApplicationGatewayAffinity",
-                            "requestTimeout": 20,
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-nstg-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "bs-plum-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-plum-n-001')]",
-                        "properties": {
-                            "port": 80,
-                            "protocol": "Http",
-                            "cookieBasedAffinity": "Disabled",
-                            "pickHostNameFromBackendAddress": false,
-                            "affinityCookieName": "ApplicationGatewayAffinity",
-                            "requestTimeout": 20,
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-plum-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "bs-apim-devportal-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-apim-devportal-n-001')]",
-                        "properties": {
-                            "port": 80,
-                            "protocol": "Http",
-                            "cookieBasedAffinity": "Disabled",
-                            "pickHostNameFromBackendAddress": true,
-                            "affinityCookieName": "ApplicationGatewayAffinity",
-                            "requestTimeout": 20,
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-api-devportal-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "bs-api-gw-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-api-gw-n-001')]",
-                        "properties": {
-                            "port": 80,
-                            "protocol": "Http",
-                            "cookieBasedAffinity": "Disabled",
-                            "pickHostNameFromBackendAddress": true,
-                            "affinityCookieName": "ApplicationGatewayAffinity",
-                            "requestTimeout": 20,
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-api-gw-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "bs-ai-services-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-ai-services-n-001')]",
-                        "properties": {
-                            "port": 8090,
-                            "protocol": "Http",
-                            "cookieBasedAffinity": "Disabled",
-                            "pickHostNameFromBackendAddress": false,
                             "requestTimeout": 20
                         }
                     }
@@ -226,40 +109,7 @@
                 "backendSettingsCollection": [],
                 "httpListeners": [
                     {
-                        "name": "list-nstg-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-nstg-n')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
-                            },
-                            "frontendPort": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_81')]"
-                            },
-                            "protocol": "Http",
-                            "hostNames": [],
-                            "requireServerNameIndication": false,
-                            "customErrorConfigurations": []
-                        }
-                    },
-                    {
-                        "name": "list-plum-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-plum-n')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
-                            },
-                            "frontendPort": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_82')]"
-                            },
-                            "protocol": "Http",
-                            "hostNames": [],
-                            "requireServerNameIndication": false,
-                            "customErrorConfigurations": []
-                        }
-                    },
-                    {
-                        "name": "list-api-gw-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-api-gw-n')]",
+                        "name": "TestListner",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
@@ -268,42 +118,7 @@
                                 "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_80')]"
                             },
                             "protocol": "Http",
-                            "hostName": "api-z-cplus-infra-n-001.azure-api.net",
-                            "hostNames": [],
-                            "requireServerNameIndication": false,
-                            "customErrorConfigurations": []
-                        }
-                    },
-                    {
-                        "name": "list-api-devportal-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-api-devportal-n')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
-                            },
-                            "frontendPort": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_80')]"
-                            },
-                            "protocol": "Http",
-                            "hostName": "api-z-cplus-infra-n-001.developer.azure-api.net",
-                            "hostNames": [],
-                            "requireServerNameIndication": false,
-                            "customErrorConfigurations": []
-                        }
-                    },
-                    {
-                        "name": "list-ai-services-n",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-ai-services-n')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendIPConfigurations/appGwPublicFrontendIpIPv4')]"
-                            },
-                            "frontendPort": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/frontendPorts/port_8090')]"
-                            },
-                            "protocol": "Http",
-                            "hostNames": [],
-                            "requireServerNameIndication": false,
+                            "sslCertificate": null,
                             "customErrorConfigurations": []
                         }
                     }
@@ -312,167 +127,24 @@
                 "urlPathMaps": [],
                 "requestRoutingRules": [
                     {
-                        "name": "ag-cplus-plum-http-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/requestRoutingRules/ag-cplus-plum-http-001')]",
+                        "Name": "TestRule",
                         "properties": {
-                            "ruleType": "Basic",
+                            "RuleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/TestListner')]"
+                            },
                             "priority": 100,
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-plum-n')]"
-                            },
                             "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-plum-n')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/TestBackendTarget')]"
                             },
                             "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-plum-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "ag-cplus-nstg-http-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/requestRoutingRules/ag-cplus-nstg-http-001')]",
-                        "properties": {
-                            "ruleType": "Basic",
-                            "priority": 101,
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-nstg-n')]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-nstg-n')]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-nstg-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "ag-cplus-api-devportal-http-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/requestRoutingRules/ag-cplus-api-devportal-http-001')]",
-                        "properties": {
-                            "ruleType": "Basic",
-                            "priority": 103,
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-api-devportal-n')]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-api-devportal-n')]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-apim-devportal-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "ag-cplus-api-gw-http-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/requestRoutingRules/ag-cplus-api-gw-http-001')]",
-                        "properties": {
-                            "ruleType": "Basic",
-                            "priority": 104,
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-api-gw-n')]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-api-gw-n')]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-api-gw-n-001')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "ag-cplus-ai-services-http-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/requestRoutingRules/ag-cplus-ai-services-http-001')]",
-                        "properties": {
-                            "ruleType": "Basic",
-                            "priority": 105,
-                            "httpListener": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/httpListeners/list-ai-services-n')]"
-                            },
-                            "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendAddressPools/bp-ai-services-n')]"
-                            },
-                            "backendHttpSettings": {
-                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/bs-ai-services-n-001')]"
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/backendHttpSettingsCollection/TestBackendSetting')]"
                             }
                         }
                     }
                 ],
                 "routingRules": [],
                 "probes": [
-                    {
-                        "name": "hp-nstg-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-nstg-n-001')]",
-                        "properties": {
-                            "protocol": "Http",
-                            "host": "127.0.0.1",
-                            "path": "/nsgrocery",
-                            "interval": 30,
-                            "timeout": 30,
-                            "unhealthyThreshold": 3,
-                            "pickHostNameFromBackendHttpSettings": false,
-                            "minServers": 0,
-                            "match": {
-                                "statusCodes": [
-                                    "200-399"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "name": "hp-plum-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-plum-n-001')]",
-                        "properties": {
-                            "protocol": "Http",
-                            "host": "127.0.0.1",
-                            "path": "/emerson",
-                            "interval": 30,
-                            "timeout": 30,
-                            "unhealthyThreshold": 3,
-                            "pickHostNameFromBackendHttpSettings": false,
-                            "minServers": 0,
-                            "match": {
-                                "statusCodes": [
-                                    "200-399"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "name": "hp-api-devportal-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-api-devportal-n-001')]",
-                        "properties": {
-                            "protocol": "Http",
-                            "path": "/",
-                            "interval": 30,
-                            "timeout": 30,
-                            "unhealthyThreshold": 3,
-                            "pickHostNameFromBackendHttpSettings": true,
-                            "minServers": 0,
-                            "match": {
-                                "statusCodes": [
-                                    "200-399"
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "name": "hp-api-gw-n-001",
-                        "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewaysName')), '/probes/hp-api-gw-n-001')]",
-                        "properties": {
-                            "protocol": "Http",
-                            "path": "/",
-                            "interval": 30,
-                            "timeout": 30,
-                            "unhealthyThreshold": 3,
-                            "pickHostNameFromBackendHttpSettings": true,
-                            "minServers": 0,
-                            "match": {
-                                "statusCodes": [
-                                    "200-399"
-                                ]
-                            }
-                        }
-                    }
                 ],
                 "rewriteRuleSets": [],
                 "redirectConfigurations": [],

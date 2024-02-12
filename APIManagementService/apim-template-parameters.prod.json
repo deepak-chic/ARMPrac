@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "apimName": {
-            "value": "api-z-cplus-infra-p-001"
+            "value": "api-z-cplusgw-p-001"
         },
         "skuName": {
             "value": "Premium"
@@ -19,6 +19,14 @@
         },
         "publicIPAddressesName": {
             "value": "pip-z-cplus-api-p-001"
+        },
+        "capacity": {
+            "value": "1"
+        },
+        "identity": {
+            "value": {
+                "type": "None"
+            }
         }
     }
 }

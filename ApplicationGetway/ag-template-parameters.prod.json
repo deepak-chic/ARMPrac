@@ -12,7 +12,7 @@
             "value": "sn-z-cplus-appgateway"
         },
         "publicIPAddressesName": {
-            "value": "pip-z-cop-cus-cplus1-001"
+            "value": "pip-z-cplus-ag-p-001"
         },
         "sku": {
             "value": "Standard_v2"
