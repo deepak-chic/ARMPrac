@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "virtualMachineName": {
-            "value": "vm-z-redis-p"
+            "value": "vm-z-rdis-p"
         },
         "vmSize": {
             "value": "Standard_F16s_v2"

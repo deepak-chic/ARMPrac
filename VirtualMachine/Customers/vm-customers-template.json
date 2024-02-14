@@ -39,6 +39,14 @@
         "infraResourceGroupName": {
             "defaultValue": "rg-z-cplus-infra-n-001",
             "type": "String"
+        },
+        "galaryName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "imageName": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {},
@@ -65,101 +73,108 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2022-datacenter-smalldisk-g2",
-                        "version": "latest"
+                        // "publisher": "MicrosoftWindowsServer",
+                        // "offer": "WindowsServer",
+                        // "sku": "2022-datacenter-smalldisk-g2",
+                        // "version": "latest"
+                        "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Compute/galleries/images', parameters('galaryName'), parameters('imageName'))]"
                     },
                     "osDisk": {
-                        "osType": "Windows",
-                        "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachineName'), 'OsDisk', copyIndex(1))]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
+                        //     "osType": "Windows",
+                        //    // "name": "[format('{0}_{1}_{2:000}', parameters('virtualMachineName'), 'OsDisk', copyIndex(1))]",
+                        //     "createOption": "FromImage",
+                        //     "caching": "ReadWrite",
+                        //     // "managedDisk": {
+                        //     //     "storageAccountType": "Premium_LRS"
+                        //     // },
+                        //     "deleteOption": "Delete",
+                        //     "diskSizeGB": 256
+                
+                            "createOption": "fromImage",
+                            "managedDisk": {
+                                "storageAccountType": "Premium_LRS"
+                            },
+                            "deleteOption": "Delete"
                         },
-                        "deleteOption": "Delete",
-                        "diskSizeGB": 256
+                        "dataDisks": [],
+                        "diskControllerType": "SCSI"
                     },
-                    "dataDisks": [],
-                    "diskControllerType": "SCSI"
-                },
-                "osProfile": {
-                    "computerName": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
-                    "adminUsername": "azureuser",
-                    "adminPassword":"Copeland@123",
-                    "windowsConfiguration": {
-                        "provisionVMAgent": true,
-                        "enableAutomaticUpdates": true,
-                        "patchSettings": {
-                            "patchMode": "AutomaticByOS",
-                            "assessmentMode": "ImageDefault",
-                            "enableHotpatching": false
+                    // "osProfile": {
+                    //     "computerName": "[format('{0}-{1:000}', parameters('virtualMachineName'), copyIndex(1))]",
+                    //     "adminUsername": "azureuser",
+                    //     "adminPassword": "Copeland@123",
+                    //     "windowsConfiguration": {
+                    //         "provisionVMAgent": true,
+                    //         "enableAutomaticUpdates": true,
+                    //         "patchSettings": {
+                    //             "patchMode": "AutomaticByOS",
+                    //             "assessmentMode": "ImageDefault",
+                    //             "enableHotpatching": false
+                    //         },
+                    //         "enableVMAgentPlatformUpdates": false
+                    //     },
+                    //     "secrets": [],
+                    //     "allowExtensionOperations": true
+                    // },
+                    "securityProfile": {
+                        "uefiSettings": {
+                            "secureBootEnabled": true,
+                            "vTpmEnabled": true
                         },
-                        "enableVMAgentPlatformUpdates": false
+                        "securityType": "TrustedLaunch"
                     },
-                    "secrets": [],
-                    "allowExtensionOperations": true
-                },
-                "securityProfile": {
-                    "uefiSettings": {
-                        "secureBootEnabled": true,
-                        "vTpmEnabled": true
-                    },
-                    "securityType": "TrustedLaunch"
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
-                            "properties": {
-                                "deleteOption": "Delete"
+                    "networkProfile": {
+                        "networkInterfaces": [
+                            {
+                                "id": "[resourceId('Microsoft.Network/networkInterfaces', format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1)))]",
+                                "properties": {
+                                    "deleteOption": "Delete"
+                                }
                             }
+                        ]
+                    },
+                    "diagnosticsProfile": {
+                        "bootDiagnostics": {
+                            "enabled": true
                         }
-                    ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true
                     }
                 }
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2023-04-01",
-            "copy": {
-                "name": "NetworkInterfaceLoop",
-                "count": "[parameters('numberOfInstances')]"
             },
-            "name": "[format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1))]",
-            "location": "[parameters('location')]",
-            "tags": "[parameters('tags')]",
-            "kind": "Regular",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+            {
+                "type": "Microsoft.Network/networkInterfaces",
+                "apiVersion": "2023-04-01",
+                "copy": {
+                    "name": "NetworkInterfaceLoop",
+                    "count": "[parameters('numberOfInstances')]"
                 },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "disableTcpStateTracking": false,
-                "nicType": "Standard",
-                "auxiliaryMode": "None",
-                "auxiliarySku": "None"
+                "name": "[format('{0}-{1:000}',parameters('networkInterfacesName'), copyIndex(1))]",
+                "location": "[parameters('location')]",
+                "tags": "[parameters('tags')]",
+                "kind": "Regular",
+                "properties": {
+                    "ipConfigurations": [
+                        {
+                            "name": "ipconfig1",
+                            "properties": {
+                                "privateIPAllocationMethod": "Dynamic",
+                                "subnet": {
+                                    "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+                                },
+                                "primary": true,
+                                "privateIPAddressVersion": "IPv4"
+                            }
+                        }
+                    ],
+                    "dnsSettings": {
+                        "dnsServers": []
+                    },
+                    "enableAcceleratedNetworking": false,
+                    "enableIPForwarding": false,
+                    "disableTcpStateTracking": false,
+                    "nicType": "Standard",
+                    "auxiliaryMode": "None",
+                    "auxiliarySku": "None"
+                }
             }
-        }
     ]
 }

@@ -70,9 +70,9 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "RedHat",
+                         "publisher": "RedHat",
                         "offer": "RHEL",
-                        "sku": "7lvm-gen2",
+                        "sku": "8-lvm-gen2",
                         "version": "latest"
                     },
                     "osDisk": {

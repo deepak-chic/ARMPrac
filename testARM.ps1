@@ -3,22 +3,39 @@ $location = "centralus"
 $globalParameterFile = "./global-parameters.$environment.json"
 $rgInfraName = "rg-z-cplus-infra-p-001"
 
-# DB Resource Group and Resources
+# Customer Resource Group and Resources
 
-# # Deploy the SQL DB VM
-# $templateFile = "./VirtualMachine/Db/vm-sql-template.json"
-# $templateParameterFile = "./VirtualMachine/Db/vm-sql-template-parameters.$environment.json"
-# az deployment group create `
-#    --resource-group $rgDBName `
-#    --template-file $templateFile `
-#    --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName
+# $customers = @( @{'name'='nsgs';"size" = "Standard_D4s_v5"}, 
+# @{'name'='plum';"size" = "Standard_D4s_v5"}, 
+# @{'name'='sulo';"size" = "Standard_E4as_v5"})
 
-$rgHubName = "rg-z-cplus-gw-p-001"
+$rgAIName = "rg-z-cplus-ai-p-001"
+   $rgCustomerName = "rg-z-cplus-emrl-p-001"
+   $sshKeyName = 'ssh-z-cplus-cus-ai-p-001'
+   # $templateFile = "./ResourceGroup/resourcegroup-template.json"
+   # az deployment sub create `
+   #    --location $location `
+   #    --template-file $templateFile `
+   #    --parameters $globalParameterFile name=$rgCustomerName
 
-# Deploy the Application gateway
-$templateFile = "./APIManagementService/apim-template.json"
-$templateParameterFile = "./APIManagementService/apim-template-parameters.$environment.json"
+   # # Deploy the Customer VM
+   # $customerVMName = "vm-z-emrl-p"
+   # $customerNICName = "$customerVMName-nic"
+   # $customerSubNetName = "sn-z-cplus-emrl"
+   # $templateFile = "./VirtualMachine/Customers/vm-customers-template.json"
+   # $templateParameterFile = "./VirtualMachine/Customers/vm-customers-template-parameters.$environment.json"
+   # az deployment group create `
+   #    --resource-group $rgCustomerName `
+   #    --template-file $templateFile `
+   #    --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
+   #    subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName vmSize='Standard_E4as_v5'
+
+   
+# Deploy the redis VM
+$templateFile = "./VirtualMachine/Linux/vm-redis-template.json"
+$templateParameterFile = "./VirtualMachine/Linux/vm-redis-template-parameters.$environment.json"
 az deployment group create `
-   --resource-group $rgHubName `
+   --resource-group $rgAIName `
    --template-file $templateFile `
-   --parameters $globalParameterFile $templateParameterFile
+   --parameters $globalParameterFile $templateParameterFile infraResourceGroupName=$rgInfraName sshKeyName=$sshKeyName
+
