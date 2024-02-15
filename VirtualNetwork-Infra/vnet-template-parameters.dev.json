@@ -10,7 +10,7 @@
                 "10.195.112.0/22"
             ]
         },
-        "subnets": {
+        "subnetsData": {
             "value": [
                 {
                     "name": "AzureBastionSubnet",

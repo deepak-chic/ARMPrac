@@ -174,18 +174,21 @@ while($counter -le $noOfInstance)
 # Customer Resource Group and Resources
 
 $customers = @( @{'name'='publ';"size" = "Standard_D4s_v5"}, 
-@{'name'='groc';"size" = "Standard_D4s_v5"}, 
-@{'name'='cole';"size" = "Standard_E4as_v5"}, 
-@{'name'='amaz';"size" = "Standard_E8as_v5"}, 
-@{'name'='amsk';"size" = "Standard_E8as_v5"}, 
-@{'name'='meij';"size" = "Standard_E8as_v5"}, 
-@{'name'='whol';"size" = "Standard_D8s_v5"}, 
-@{'name'='waca';"size" = "Standard_D8s_v5"}, 
-@{'name'='cobo';"size" = "Standard_D2s_v5"}, 
-@{'name'='emrl';"size" = "Standard_E4as_v5"})
+@{'name'='emrl';"size" = "Standard_D4s_v5"},
+@{'name'='huss';"size" = "Standard_D4s_v5"},
+@{'name'='sdco';"size" = "Standard_D4s_v5"},
+@{'name'='dscl';"size" = "Standard_D4s_v5"},
+@{'name'='rsic';"size" = "Standard_D4s_v5"},
+@{'name'='pens';"size" = "Standard_D4s_v5"},
+@{'name'='bran';"size" = "Standard_D4s_v5"},
+@{'name'='star';"size" = "Standard_D4s_v5"},
+@{'name'='nsgs';"size" = "Standard_D4s_v5"},
+@{'name'='plum';"size" = "Standard_D4s_v5"},
+@{'name'='sulo';"size" = "Standard_D4s_v5"}
+)
 
 foreach ( $customer in $customers ) {
-   $rgCustomerName = "rg-z-cplus-$($customer.name)-p-001"
+   $rgCustomerName = "rg-z-cust-$($customer.name)-p-001"
 
    $templateFile = "./ResourceGroup/resourcegroup-template.json"
    az deployment sub create `
