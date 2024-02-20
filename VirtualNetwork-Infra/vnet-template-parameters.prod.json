@@ -196,14 +196,14 @@
                     "nsgName": "nsg-z-cplus-dscl-p-001"
                 },
                 {
-                    "name": "sn-z-cplus-rsic",
+                    "name": "sn-z-cplus-burg",
                     "addressPrefixes": [
                         "10.195.67.104/29"
                     ],
                     "delegations": [],
                     "privateEndpointNetworkPolicies": "Disabled",
                     "privateLinkServiceNetworkPolicies": "Enabled",
-                    "nsgName": "nsg-z-cplus-rsic-p-001"
+                    "nsgName": "nsg-z-cplus-burg-p-001"
                 },
                 {
                     "name": "sn-z-cplus-pens",
@@ -264,6 +264,26 @@
                     "privateEndpointNetworkPolicies": "Disabled",
                     "privateLinkServiceNetworkPolicies": "Enabled",
                     "nsgName": "nsg-z-cplus-sulo-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-foli",
+                    "addressPrefixes": [
+                        "10.195.67.200/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-foli-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-demo",
+                    "addressPrefixes": [
+                        "10.195.68.136/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-demo-p-001"
                 }
             ]
         }

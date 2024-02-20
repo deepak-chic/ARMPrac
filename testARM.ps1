@@ -6,25 +6,27 @@ $rgAIName = "rg-z-cplus-ai-p-001"
 $rgCustomerName = "rg-z-cplus-emrl-p-001"
 $sshKeyName = 'ssh-z-cplus-cus-ai-p-001'
 $rgDBName = "rg-z-cplus-db-p-001"
-$sshKeyName = 'ssh-z-cplus-cus-db-p-001'
+# $sshKeyName = 'ssh-z-cplus-cus-db-p-001'
 # Customer Resource Group and Resources
-  
-$customers = @( @{'name'='publ';"size" = "Standard_D4s_v5"}, 
-@{'name'='emrl';"size" = "Standard_D4s_v5"},
-@{'name'='huss';"size" = "Standard_D4s_v5"},
-@{'name'='sdco';"size" = "Standard_D4s_v5"},
-@{'name'='dscl';"size" = "Standard_D4s_v5"},
-@{'name'='rsic';"size" = "Standard_D4s_v5"},
-@{'name'='pens';"size" = "Standard_D4s_v5"},
-@{'name'='bran';"size" = "Standard_D4s_v5"},
-@{'name'='star';"size" = "Standard_D4s_v5"},
-@{'name'='nsgs';"size" = "Standard_D4s_v5"},
-@{'name'='plum';"size" = "Standard_D4s_v5"},
-@{'name'='sulo';"size" = "Standard_D4s_v5"}
-)
 
-foreach ( $customer in $customers ) {
-   $rgCustomerName = "rg-z-cust-$($customer.name)-p-001"
+# Deploy the Infra Network Security Groups
+$templateFile = "./NetworkSecurityGroup-Infra/nsg-template.json"
+$templateParameterFile = "./NetworkSecurityGroup-Infra/nsg-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
+   
+# Deploy Infra Virtual Network
+$templateFile = "./VirtualNetwork-Infra/vnet-template.json"
+$templateParameterFile = "./VirtualNetwork-Infra/vnet-template-parameters.$environment.json"
+az deployment group create `
+   --resource-group $rgInfraName `
+   --template-file $templateFile `
+   --parameters $templateParameterFile $globalParameterFile
+
+$custName = "demo"
+$rgCustomerName = "rg-z-cust-$($custName)-p-001"
 
    $templateFile = "./ResourceGroup/resourcegroup-template.json"
    az deployment sub create `
@@ -33,14 +35,13 @@ foreach ( $customer in $customers ) {
       --parameters $globalParameterFile name=$rgCustomerName
 
    # Deploy the Customer VM
-   $customerVMName = "vm-z-$($customer.name)-p"
+   $customerVMName = "vm-z-$($custName)-p"
    $customerNICName = "$customerVMName-nic"
-   $customerSubNetName = "sn-z-cplus-$($customer.name)"
+   $customerSubNetName = "sn-z-cplus-$($custName)"
    $templateFile = "./VirtualMachine/Customers/vm-customers-template.json"
    $templateParameterFile = "./VirtualMachine/Customers/vm-customers-template-parameters.$environment.json"
    az deployment group create `
       --resource-group $rgCustomerName `
       --template-file $templateFile `
       --parameters $globalParameterFile $templateParameterFile virtualMachineName=$customerVMName networkInterfacesName=$customerNICName `
-      subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName vmSize=$($customer.size)
-}
+      subnetName=$customerSubNetName infraResourceGroupName=$rgInfraName vmSize='Standard_D4s_v5'
