@@ -40,6 +40,10 @@
             "defaultValue": "rg-z-cplus-infra-n-001",
             "type": "String"
         },
+        "galaryResourceGroupName": {
+            "defaultValue": "rg-z-cplus-infra-n-001",
+            "type": "String"
+        },
         "galaryName": {
             "type": "string",
             "defaultValue": ""
@@ -77,7 +81,7 @@
                         // "offer": "WindowsServer",
                         // "sku": "2022-datacenter-smalldisk-g2",
                         // "version": "latest"
-                        "id": "[resourceId(parameters('infraResourceGroupName'), 'Microsoft.Compute/galleries/images', parameters('galaryName'), parameters('imageName'))]"
+                        "id": "[resourceId('bd838b1b-c6fb-480b-a0d8-2ef04ce8c1db',parameters('galaryResourceGroupName'), 'Microsoft.Compute/galleries/images', parameters('galaryName'), parameters('imageName'))]"
                     },
                     "osDisk": {
                         //     "osType": "Windows",

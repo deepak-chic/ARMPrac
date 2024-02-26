@@ -73,10 +73,12 @@
                                 "delegations": "[parameters('subnetsData')[copyIndex('subnets')].delegations]",
                                 "privateEndpointNetworkPolicies": "[parameters('subnetsData')[copyIndex('subnets')].privateEndpointNetworkPolicies]",
                                 "privateLinkServiceNetworkPolicies": "[parameters('subnetsData')[copyIndex('subnets')].privateLinkServiceNetworkPolicies]",
-                                "networkSecurityGroup": {
-                                    //"id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnetsData')[0].nsgName)]"
-                                    "id": "[if(equals(parameters('subnetsData')[copyIndex('subnets')].nsgName, json('null')), json('null'),resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnetsData')[copyIndex('subnets')].nsgName))]"
-                                }
+                                "networkSecurityGroup": 
+                                    "[if(not(empty(parameters('subnetsData')[copyindex('subnets')].nsgname)), json(concat('{\"id\": \"', resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnetsData')[copyIndex('subnets')].nsgName), '\"}')), json('null') )]"
+                                    //"condition": "[not(empty(parameters('subnetsData')[copyIndex('subnets')].nsgName))]",
+                                    //"id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('subnetsData')[copyIndex('subnets')].nsgName)]",
+                                    //"id": "[if(empty(parameters('subnetsData')[copyIndex('subnets')].nsgName), json('null'), resourceId('Microsoft.Network/networkSecurityGroups', parameters('subnetsData')[copyIndex('subnets')].nsgName))]"
+                                
                             }
                         }
                     }

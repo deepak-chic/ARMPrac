@@ -237,6 +237,14 @@ az deployment group create `
    --template-file $templateFile `
    --parameters $globalParameterFile $templateParameterFile
 
+# Deploy the Azure Kubernete Cluster
+   $templateFile = "./Kubernete/aks-template.json"
+   $templateParameterFile = "./Kubernete/aks-template-parameters.$environment.json"
+   az deployment group create `
+      --resource-group $rgInfraName `
+      --template-file $templateFile `
+      --parameters $globalParameterFile $templateParameterFile
+
 # ========================================================================================
 # Deploy other resources for Hub Resource Group
 $rgHubName = "rg-z-cplus-gw-p-001"

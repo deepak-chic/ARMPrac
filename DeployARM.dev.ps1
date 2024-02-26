@@ -1,3 +1,5 @@
+# az account set --subscription "9a619d67-2c01-479d-9f49-e99487cc3b67"  
+
 # Global Variables
 $environment = "dev"
 $location = "centralus"

@@ -58,12 +58,12 @@
                 {
                     "name": "sn-z-cplus-aks",
                     "addressPrefixes": [
-                        "10.195.66.0/24"
+                        "10.195.70.0/23"
                     ],
                     "delegations": [],
                     "privateEndpointNetworkPolicies": "Disabled",
                     "privateLinkServiceNetworkPolicies": "Enabled",
-                    "nsgName": "nsg-z-cplus-aks-p-001"
+                    "nsgName": ""
                 },
                 {
                     "name": "sn-z-cplus-publ",
