@@ -284,6 +284,66 @@
                     "privateEndpointNetworkPolicies": "Disabled",
                     "privateLinkServiceNetworkPolicies": "Enabled",
                     "nsgName": "nsg-z-cplus-demo-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-aldi",
+                    "addressPrefixes": [
+                        "10.195.67.160/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-aldi-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-atsi",
+                    "addressPrefixes": [
+                        "10.195.67.168/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-atsi-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-brin",
+                    "addressPrefixes": [
+                        "10.195.67.176/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-brin-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-casa",
+                    "addressPrefixes": [
+                        "10.195.67.184/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-casa-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-heli",
+                    "addressPrefixes": [
+                        "10.195.68.0/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-heli-p-001"
+                },
+                {
+                    "name": "sn-z-cplus-waus",
+                    "addressPrefixes": [
+                        "10.195.68.144/29"
+                    ],
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled",
+                    "nsgName": "nsg-z-cplus-waus-p-001"
                 }
             ]
         }

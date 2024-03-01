@@ -21,7 +21,6 @@
                 "nsg-z-cplus-huss-p-001",
                 "nsg-z-cplus-sdco-p-001",
                 "nsg-z-cplus-dscl-p-001",
-                "nsg-z-cplus-burg-p-001",
                 "nsg-z-cplus-pens-p-001",
                 "nsg-z-cplus-bran-p-001",
                 "nsg-z-cplus-star-p-001",
@@ -29,7 +28,14 @@
                 "nsg-z-cplus-plum-p-001",
                 "nsg-z-cplus-sulo-p-001",
                 "nsg-z-cplus-foli-p-001",
-                "nsg-z-cplus-demo-p-001"
+                "nsg-z-cplus-demo-p-001",
+                "nsg-z-cplus-aldi-p-001",
+                "nsg-z-cplus-atsi-p-001",
+                "nsg-z-cplus-brin-p-001",
+                "nsg-z-cplus-burg-p-001",
+                "nsg-z-cplus-casa-p-001",
+                "nsg-z-cplus-heli-p-001",
+                "nsg-z-cplus-waus-p-001"
             ]
         }
     }
